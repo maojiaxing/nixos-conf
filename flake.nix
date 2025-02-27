@@ -1,28 +1,35 @@
 {
-  description = "NixOS flake";
+  description = "maojiaxing's nix configuration for NixOS";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    flake-utils.url = github:numtide/flake-utils";
     
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
-      
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, ... }@inputs: {
-    
-    nixosConfigurations.work-machine = nixpkgs.lib.nixosSystem {
-      
-      system = "x86_64-linux";
-      
-      specialArgs = { inherit inputs; };
+  outputs = { self, nixpkgs, nixos-wsl, ... }@inputs: 
+    let 
+      hosts = builtins.attrNames (builtins.readDir ./hosts);
 
-      modules = [ 
-        nixos-wsl.nixosModules.default
-        ./configuration.nix
-      ];
+      load = host: import(./host + "${host}/default.nix") {
+        inherit inputs;
+        lib = nixpkgs.lib;
+      };
+    in  
+    {
+      nixosConfigurations= builtins.listToAttrs (map (host: {
+        name = host;
+        value = loadHost host;
+      }) hosts);
     };
-  };
 }
