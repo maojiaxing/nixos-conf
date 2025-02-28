@@ -1,5 +1,5 @@
 { lib, inputs, ... }:
-args@{ 
+args@{
   hostname,
   system ? "x86_64-linux",
   hardware ? null,
@@ -8,7 +8,7 @@ args@{
 
 let
   # 自动检测硬件配置是否存在
-  hardwareModule = 
+  hardwareModule =
     if (builtins.pathExists (../hosts + "/${hostname}/hardware.nix"))
     then { imports = [ (../hosts + "/${hostname}/hardware.nix") ]; }
     else {};
@@ -26,5 +26,5 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs hostname;
   };
-  
+
 }
