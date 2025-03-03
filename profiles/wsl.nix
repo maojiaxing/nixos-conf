@@ -1,8 +1,7 @@
 { config, input, pkgs, nixos-wsl, ... }: 
 
-{
-  boot.loader.grub.enable = false;
-
+nix-wsl.nixosModules.default {
+   
   wsl = {
     enable = true;
     defaultUser = "nixos";
