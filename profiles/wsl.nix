@@ -1,6 +1,11 @@
 { config, input, pkgs, nixos-wsl, ... }: 
 
-nix-wsl.nixosModules.default {
+{
+  imports = [ 
+    (import <nixos-wsl>).nixosModules.default 
+  ];
+
+  system.stateVersion = "24.05";
    
   wsl = {
     enable = true;
