@@ -44,7 +44,7 @@
       # 安全的路径拼接方式
       hostPath = host: ./hosts/${host};
 
-      makeMachine = import ./lib/make-machine.nix;
+      extendedLib = inputs.nixpkgs.lib // import ./lib/default.nix { inherit inputs; inherit (nixpkgs) lib; };
 
       getHosts = dir:
         let
@@ -66,6 +66,8 @@
               inherit nixos-wsl home-manager sops-nix makeMachine;
               hostRoot = hostPath host;
             };
+
+            lib = extendedLib;
           }
         else
           throw "Host configuration missing: ${toString configFile}";
