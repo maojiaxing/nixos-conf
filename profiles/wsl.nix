@@ -13,11 +13,6 @@
     startMenuLaunchers = true;
   };
     
-  wslConf = {
-    automount.root = "/mnt";
-    interop.enable = true;
-  };
-    
   #fileSystems."/mnt/c" = {
   #  fsType = "drvfs";
   #  options = [ "noatime" "metadata" ];
