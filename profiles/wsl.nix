@@ -1,4 +1,6 @@
-{ config, input, pkgs, ... }: {
+{ config, input, pkgs, ... }: 
+
+{
   wsl = {
     enable = true;
     defaultUser = "nixos";
@@ -10,10 +12,10 @@
     interop.enable = true;
   };
     
-  fileSystems."/mnt/c" = {
-    fsType = "drvfs";
-    options = [ "noatime" "metadata" ];
-  };
+  #fileSystems."/mnt/c" = {
+  #  fsType = "drvfs";
+  #  options = [ "noatime" "metadata" ];
+  #};
 
   environment.systemPackages = with pkgs; [ nvim git curl zsh ];
 
