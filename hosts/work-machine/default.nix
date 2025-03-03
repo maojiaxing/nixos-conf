@@ -7,7 +7,7 @@ makeMachine {
   enableGUI = true;
 
   profiles = [
-    ../../profiles/development.nix  
+    ../../profiles/wsl.nix  
   ];
 
   extraModules = [
