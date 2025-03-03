@@ -1,4 +1,4 @@
-{ config, input, pkgs, ... }: 
+{ config, input, pkgs, nixos-wsl, ... }: 
 
 {
   boot.loader.grub.enable = false;

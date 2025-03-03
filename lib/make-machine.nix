@@ -17,7 +17,7 @@ let
   finalModules = [
     hardwareModule
     ({ ... }: { networking.hostName = hostname; })
-  ] ++ (args.modules or []);
+  ] ++ (args.profiles or []);
 in
 
 inputs.nixpkgs.lib.nixosSystem {
