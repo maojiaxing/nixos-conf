@@ -18,7 +18,7 @@
   #  options = [ "noatime" "metadata" ];
   #};
 
-  environment.systemPackages = with pkgs; [ vim git curl zsh ];
+  environment.systemPackages = with pkgs; [ vim git curl zsh warp-terminal ];
 
   hardware.graphics.enable = true;
 
