@@ -4,6 +4,7 @@ let
 in
 makeMachine {
   hostname = "work-machine";
+  
   enableGUI = true;
 
   profiles = [
@@ -12,7 +13,7 @@ makeMachine {
 
   extraModules = [
     ({ pkgs, ... }: {
-      services.nginx.enable = true;
+      services.nginx.enable = false;
     })
   ];
 }

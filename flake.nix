@@ -63,7 +63,7 @@
             inherit inputs;
 
             specialArgs = {
-              inherit nixos-wsl home-manager sops-nix makeMachine;
+              inherit nixos-wsl home-manager sops-nix;
               hostRoot = hostPath host;
             };
 
