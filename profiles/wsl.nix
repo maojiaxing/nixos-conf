@@ -11,7 +11,6 @@
     enable = true;
     defaultUser = "nixos";
     startMenuLaunchers = true;
-    nativeSystemd = true;
   };
     
   #fileSystems."/mnt/c" = {
