@@ -16,7 +16,7 @@ let
 
   finalModules = [
     hardwareModule
-    ({ ... }: { networking.hostName = hostname; })
+    ({ ... }: { networking.hostName = hostname; nixpkgs.config.allowUnfree = true;})
   ] ++ (args.profiles or []);
 in
 
