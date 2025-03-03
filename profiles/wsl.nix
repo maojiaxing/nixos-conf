@@ -1,8 +1,8 @@
-{ config, input, pkgs, nixos-wsl, ... }: 
+{ config, inputs, pkgs, ... }: 
 
 {
   imports = [ 
-    (import <nixos-wsl>).nixosModules.default 
+    inputs.nixos-wsl.nixosModules.default 
   ];
 
   system.stateVersion = "24.05";
