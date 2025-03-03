@@ -7,7 +7,7 @@
     enable = true;
     defaultUser = "nixos";
     startMenuLaunchers = true;
-  }
+  };
     
   wslConf = {
     automount.root = "/mnt";
