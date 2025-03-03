@@ -5,12 +5,13 @@
     inputs.nixos-wsl.nixosModules.default 
   ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
    
   wsl = {
     enable = true;
     defaultUser = "nixos";
     startMenuLaunchers = true;
+    nativeSystemd = true;
   };
     
   #fileSystems."/mnt/c" = {
@@ -18,7 +19,26 @@
   #  options = [ "noatime" "metadata" ];
   #};
 
-  environment.systemPackages = with pkgs; [ vim git curl zsh warp-terminal ];
+  programs.sway.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
+  environment.systemPackages = with pkgs; [ 
+    vim 
+    git 
+    curl 
+    zsh 
+    warp-terminal 
+    wayland
+    wayland-protocols
+    wl-clipboard
+    glfw-wayland
+    vulkan-loader
+  ];
 
   hardware.graphics.enable = true;
 
@@ -33,18 +53,34 @@
     "d /run/user/1000 0700 root root -"
   ];
 
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
   services.dbus = {
     enable = true;
-    packages = [ pkgs.dconf ];
-    implementation = "broker";  # 使用现代 message broker (默认)
+    packages = [ pkgs.dconf pkgs.gnome.gnome-keyring ];
   };
+
+  systemd.user.services."wireplumber" = {
+    enable = true;
+    serviceConfig = {
+      Restart = "always";
+      ExecStart = "${pkgs.wireplumber}/bin/wireplumber";
+    };
+    wantedBy = [ "default.target" ];
+};
 
   # 确保 systemd 用户实例正确激活
   systemd.user.services.dbus = {
+    enable = true;
     wantedBy = [ "default.target" ];
     serviceConfig = {
+      Type = "dbus";
+      BusName = "org.freedesktop.DBus";
       ExecStart = "${pkgs.dbus}/bin/dbus-daemon --session --nofork --nopidfile";
-      Restart = "on-failure";
     };
   };
 }
