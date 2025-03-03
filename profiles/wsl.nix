@@ -52,10 +52,6 @@
     "d /run/user/1000 0700 root root -"
   ];
 
-  hardware.opengl = {
-    enable = true;
-  };
-
   services.dbus = {
     enable = true;
     packages = [ pkgs.dconf pkgs.gnome.gnome-keyring ];
