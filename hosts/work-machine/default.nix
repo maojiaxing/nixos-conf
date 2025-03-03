@@ -1,17 +1,17 @@
 { inputs, lib, ... }:
 let
-  makeMachine = inputs.self.lib.makeMachine;
+  makeMachine = lib.makeMachine;
 in
 makeMachine {
   hostname = "work-machine";
   enableGUI = true;
 
   profiles = [
-    ../../profiles/development.nix  # 共享 Profile
+    ../../profiles/development.nix  
   ];
 
   extraModules = [
-    ({ pkgs, ... }: {  # 直接内联模块
+    ({ pkgs, ... }: {
       services.nginx.enable = true;
     })
   ];

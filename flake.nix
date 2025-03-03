@@ -46,13 +46,6 @@
 
       makeMachine = import ./lib/make-machine.nix;
 
-      # 带系统绑定的库扩展
-      extendedLib = nixpkgs.lib.extend (final: prev:
-        makeMachine {
-          inherit final inputs;
-        }
-      );
-
       getHosts = dir:
         let
           entries = builtins.readDir dir;
@@ -69,10 +62,8 @@
           import configFile {
             inherit inputs;
 
-            lib = extendedLib;
-
             specialArgs = {
-              inherit nixos-wsl home-manager sops-nix;
+              inherit nixos-wsl home-manager sops-nix makeMachine;
               hostRoot = hostPath host;
             };
           }
