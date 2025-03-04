@@ -14,8 +14,13 @@ let
     then { imports = [ (../hosts + "/${hostname}/hardware.nix") ]; }
     else {};
 
+  bootModule = {
+    imports = [ ../hosts/boot.nix ];
+  };
+
   finalModules = [
     hardwareModule
+    bootModule
     ({ ... }: { networking.hostName = hostname; nixpkgs.config.allowUnfree = true;})
   ] ++ (args.profiles or []);
 in
