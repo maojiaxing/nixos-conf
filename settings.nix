@@ -1,8 +1,8 @@
 { ... }:
 
 {
-    username = "maojiaxing";
-    email = "maojiaxing@mail.com";
+  username = "maojiaxing";
+  email = "maojiaxing@mail.com";
 
 
 }
