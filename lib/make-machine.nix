@@ -8,6 +8,10 @@
 }@args:
 
 let
+  defaultModule = { ... }: {
+    networking.hostName = hostname;
+    nixpkgs.config.allowUnfree = true;
+  };
   
   hardwareModule =
     if (builtins.pathExists (../hosts + "/${hostname}/hardware.nix"))
@@ -19,9 +23,9 @@ let
   };
 
   finalModules = [
+    defaultModule
     hardwareModule
     bootModule
-    ({ ... }: { networking.hostName = hostname; nixpkgs.config.allowUnfree = true;})
   ] ++ (args.profiles or []);
 in
 
