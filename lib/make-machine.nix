@@ -20,9 +20,11 @@ let
     else {};
 
   homeManagerModule = inputs.home-manager.nixosModules.home-manager {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      extraSpecialArgs = { inherit inputs hostName; };
+    };
   };
 
   finalModules = [
