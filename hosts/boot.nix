@@ -10,5 +10,5 @@
       users.myuser = import ./home/profiles/default.nix;
       extraSpecialArgs = { inherit inputs; };
     };
-  }；
+  };
 }

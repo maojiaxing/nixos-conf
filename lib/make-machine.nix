@@ -19,7 +19,7 @@ let
     then { imports = [ (../hosts + "/${hostname}/hardware.nix") ]; }
     else {};
 
-  homeManagerModule = inputs.home-manager.nixosModules.home-manager {
+  homeManagerModule = inputs.home-manager.lib.homeManagerConfiguration {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
