@@ -23,7 +23,7 @@ let
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      extraSpecialArgs = { inherit inputs hostName; };
+      extraSpecialArgs = { inherit inputs hostname; };
     };
   };
 
