@@ -8,6 +8,7 @@
 }@args:
 
 let
+
   defaultModule = { ... }: {
     networking.hostName = hostname;
     nixpkgs.config.allowUnfree = true;
@@ -18,14 +19,16 @@ let
     then { imports = [ (../hosts + "/${hostname}/hardware.nix") ]; }
     else {};
 
-  bootModule = {
-    imports = [ ../hosts/boot.nix ];
+  homeManagerModule = inputs.home-manager.nixosModules.home-manager {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
   };
 
   finalModules = [
     defaultModule
     hardwareModule
-    bootModule
+    homeManagerModule
   ] ++ (args.profiles or []);
 in
 
