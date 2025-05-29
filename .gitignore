@@ -1,0 +1,11 @@
+# Nix build artifacts
+result*
+*.drv
+*.swp
+*.lock
+.cache/
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+*.code-workspace
