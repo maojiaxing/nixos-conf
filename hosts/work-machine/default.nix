@@ -1,19 +1,15 @@
-{ inputs, lib, ... }:
-let
-  makeMachine = lib.makeMachine;
-in
-makeMachine {
-  hostname = "work-machine";
-  
-  enableGUI = true;
+{ lib, ... }:
 
-  profiles = [
-    ../../profiles/wsl.nix  
-  ];
+with lib;
+with builtins;
+{
+  system = "x86_64-linux";
 
-  extraModules = [
-    ({ pkgs, ... }: {
-      services.nginx.enable = false;
-    })
-  ];
+  modules = {
+
+    profiles = {
+      
+    }
+
+  }
 }
