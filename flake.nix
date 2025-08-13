@@ -12,12 +12,11 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
 
-    #flake-utils = {
-    #  url = "github:numtide/flake-utils";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    nixpkgs-unstable = {
+      url = "nixpkgs/nixos-unstable";
+    };
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
@@ -32,6 +31,10 @@
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos.hardware = {
+      url = "github:nixos/nixos-hardware";
     };
   };
 

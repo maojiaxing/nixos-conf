@@ -17,4 +17,11 @@
             )
         )
         (builtins.readDir path)));
+
+  mkApp = program: {
+    inherit program;
+    type = "app";
+  };
+
+  
 }
