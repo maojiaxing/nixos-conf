@@ -12,70 +12,52 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
 
     nixpkgs-unstable = {
       url = "nixpkgs/nixos-unstable";
     };
 
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixos.hardware = {
+      url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixos.hardware = {
-      url = "github:nixos/nixos-hardware";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, home-manager, sops-nix, ... }@inputs:
-
+  outputs = inputs @ { self, nixpkgs, nixos-wsl, home-manager, sops-nix, ... }:
     let
-      # 初始化架构特定包集合
-      #pkgs = nixpkgs.legacyPackages.${system};
+      args = {
+        inherit self;
+        inherit (nixpkgs) lib;
+        pkgs = import nixpkgs {};
+      };
 
-      # 安全的路径拼接方式
-      hostPath = host: ./hosts/${host};
+      lib = import ./lib args;
+    in 
+      with builtins;
+      with lib;
+      mkFlake input {
+        systems = [ "x86_64-linux" "aarch64-linux" ];
+        inherit lib;
 
-      extendedLib = inputs.nixpkgs.lib // import ./lib/default.nix { inherit inputs; inherit (nixpkgs) lib; };
+        hosts = mapHosts ./hosts;
+        modules.default = import ./default.nix;
 
-      getHosts = dir:
-        let
-          entries = builtins.readDir dir;
-          isDirectory = name: type: type == "directory";
-        in
-        builtins.attrNames (nixpkgs.lib.filterAttrs isDirectory entries);
-
-      # 动态加载主机配置
-      loadHost = host:
-        let
-          configFile = hostPath host + "/default.nix";
-        in
-        if builtins.pathExists configFile then
-          import configFile {
-            inherit inputs;
-
-            specialArgs = {
-              inherit nixos-wsl home-manager sops-nix;
-              hostRoot = hostPath host;
-            };
-
-            lib = extendedLib;
-          }
-        else
-          throw "Host configuration missing: ${toString configFile}";
-
-    in {
-      nixosConfigurations = nixpkgs.lib.genAttrs (getHosts ./hosts) loadHost;
-    };
+        
+      };
 }
