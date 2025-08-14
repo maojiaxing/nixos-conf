@@ -2,9 +2,8 @@
 
 with lib;
 let cfg = config.modules.profiles;
-  username = cfg.username;
+  username = cfg.name;
   key = ""
 in {
   user.username = username;
-  user.key = key;
 }
