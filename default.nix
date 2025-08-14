@@ -7,6 +7,10 @@ with lib;
   options = with types; {
     modules = {};
 
-    user 
-  }
+    user = mkOpt attrs { name = ""; };
+  };
+
+  config = {
+
+  };
 }

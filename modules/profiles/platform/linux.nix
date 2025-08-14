@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 with lib;
-mkIf (config.modules.profiles.platform == "server") {
+mkIf (config.modules.profiles.platform == "linux") {
   nix.gc = {
     automatic = true;
     dates = "weekly";

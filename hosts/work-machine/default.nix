@@ -8,8 +8,8 @@ with builtins;
   modules = {
 
     profiles = {
-      
-    }
+      platform = "wsl";
+    };
 
-  }
+  };
 }

@@ -1,27 +1,20 @@
-{ inputs, lib, ...}: 
+{ self, lib, pkgs, ...}:
 
-{
-  makeMachine = import ./make-machine.nix { inherit inputs lib; };
+let
+  inherit (builtins) mapAttrs intersectAttrs functionArgs getEnv fromJSON;
+  inherit (lib) attrValues foldr foldl;
 
-  scanPaths = path:
-    builtins.map
-    (f: (path + "/${f}"))
-    (builtins.attrNames
-      (lib.attrsets.filterAttrs
-        (
-          path: _type:
-            (_type == "directory") # include directories
-            || (
-              (path != "default.nix") # ignore default.nix
-              && (lib.strings.hasSuffix ".nix" path) # include .nix files
-            )
-        )
-        (builtins.readDir path)));
+  # mapModules gets special treatment because it's needed early!
+  inherit (attrs) attrsToList mergeAttrs';
+  inherit (modules) mapModules;
+  attrs   = import ./attrs.nix   { inherit lib; };
+  modules = import ./modules.nix { inherit lib attrs; };
 
-  mkApp = program: {
-    inherit program;
-    type = "app";
+  libConcat = a: b: a // {
+    ${b.name} = b.value (intersectAttrs (functionArgs b.value) a);
   };
 
-  
-}
+  libModules = mapModules ./. import;
+  libs = foldl libConcat { inherit lib pkgs; self = libs; } (attrsToList libModules);
+in
+  libs // (mergeAttrs' (attrValues libs))
