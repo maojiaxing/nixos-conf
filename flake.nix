@@ -20,7 +20,6 @@
 
     nixos-hardware = {
       url = "github:nixos/nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nixos-wsl = {
@@ -48,7 +47,7 @@
       };
 
       lib = import ./lib args;
-    in 
+    in
       with builtins;
       with lib;
       mkFlake input {
@@ -58,6 +57,6 @@
         hosts = mapHosts ./hosts;
         modules.default = import ./default.nix;
 
-        
+
       };
 }

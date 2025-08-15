@@ -10,11 +10,14 @@ let
   attrs   = import ./attrs.nix   { inherit lib; };
   modules = import ./modules.nix { inherit lib attrs; };
 
+  sortLibsByDeps = modules:
+    modules;
+
   libConcat = a: b: a // {
     ${b.name} = b.value (intersectAttrs (functionArgs b.value) a);
   };
 
-  libModules = mapModules ./. import;
+  libModules = sortLibsByDeps (mapModules ./. import);
   libs = foldl libConcat { inherit lib pkgs; self = libs; } (attrsToList libModules);
 in
   libs // (mergeAttrs' (attrValues libs))
