@@ -28,7 +28,7 @@ rec {
       config = import path;
     });
 
-  mkHost = { hostname, hostDef, inputs, overlays }:
+  mkHost = { hostName, hostDef, inputs, overlays }:
     let
       path = hostDef.path;
 
