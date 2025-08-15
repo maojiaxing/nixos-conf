@@ -61,7 +61,7 @@
 
         hosts = mapHosts ./hosts;
         modules.default = import ./default.nix;
-        devShells.default = import ./shell.nix;
+        # devShells.default = import ./shell.nix;
         
         overlays = mapModules ./overlays import;
         packages = mapModules ./packages import;

@@ -3,7 +3,7 @@
 with lib;
 let cfg = config.modules.profiles;
   username = cfg.name;
-  key = ""
+  key = "";
 in {
   user.username = username;
 }

@@ -2,7 +2,7 @@
 
 let
   inherit (builtins) mapAttrs intersectAttrs functionArgs getEnv fromJSON;
-  inherit (lib) attrValues foldr foldl;
+  inherit (lib) attrNames attrValues foldr foldl;
 
   # mapModules gets special treatment because it's needed early!
   attrs   = import ./attrs.nix   { inherit lib; };
@@ -18,14 +18,14 @@ let
     ${b.name} = b.value (intersectAttrs (functionArgs b.value) a);
   };
 
-  libModules = sortLibsByDeps (mapModules ./. import);
+  libModules = builtins.trace "modules:" sortLibsByDeps (mapModules ./. import);
   # 先定义一个初始值，不递归引用 self，避免循环引用
   libsInit = { inherit lib pkgs; };
   libs = foldl libConcat libsInit (attrsToList libModules);
 in
   let
     safeAttrValues = v: if builtins.isAttrs v then attrValues v else [];
-    moduleNames = attrNames allModules;
+    moduleNames = attrNames libModules;
     evaluatedModules = lib.filterAttrs (name: _: lib.elem name moduleNames) libs;
     merged = mergeAttrs' (safeAttrValues evaluatedModules);
   in

@@ -1,8 +1,8 @@
-{ lib, config, options, pkgs, ...}:
+{ self, lib, config, options, pkgs, ...}:
 
 with lib;
 {
-  imports = mapModulesRec' ./modules import;
+  imports = self.lib.mapModulesRec' ./modules import;
 
   options = with types; {
     modules = {};
