@@ -67,7 +67,7 @@ rec {
         inherit system;
         specialArgs = {
           self = self';
-          lib = pkgs.lib // self'.lib;
+          lib = pkgs.lib.recursiveUpdate pkgs.lib self'.lib;
         };
 
         modules =
