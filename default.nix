@@ -3,7 +3,7 @@
 with lib;
 with self.lib;
 let
-  mainModules = {lib, config, options, pkgs, ...}:
+  mainModule = {lib, config, options, pkgs, ...}:
     {
       imports = mapModulesRec' ./modules import;
 
