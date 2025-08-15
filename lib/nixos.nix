@@ -45,11 +45,11 @@ rec {
 
       system = hostConfig.system;
 
-      pkgs = buildPkgs {
+      pkgs = mkPkgs {
         inherit system overlays;
         pkgsPath = inputs.nixpkgs;
       } // {
-        unstable = buildPkgs {
+        unstable = mkPkgs {
           inherit system overlays;
           pkgsPath = inputs.nixpkgs-unstable;
         };
@@ -94,7 +94,7 @@ rec {
     let
       outputsForSystem = system:
         let
-          pkgs = buildPkgs {
+          pkgs = mkPkgs {
             inherit system overlays;
             pkgsPath = inputs.nixpkgs;
           };
