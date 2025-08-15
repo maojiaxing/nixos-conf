@@ -50,7 +50,7 @@
     in
       with builtins;
       with lib;
-      mkFlake input {
+      mkFlake inputs {
         systems = [ "x86_64-linux" "aarch64-linux" ];
         inherit lib;
 
