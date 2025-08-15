@@ -6,6 +6,6 @@ with lib;
     hardware = mkOpt (listOf str) [];
     platform = mkOpt str "linux";
     role = mkOpt (listOf str) [ "base" ];
-    user = mkOpt attr {};
+    user = mkOpt attrs {};
   };
 }
