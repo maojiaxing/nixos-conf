@@ -17,7 +17,7 @@ rec {
   # mkPkgs :: system -> nixpkgs -> overlays -> pkgs
   #
   # 根据系统、nixpkgs 和 overlays 构建 pkgs。
-  mkPkgs = { system, pkgsPath, overlays ? [] }:
+  mkPkgs = { system, pkgsPath, overlays ? [] }: {
     inherit system overlays;
     config.allUnfree = true;
   };
