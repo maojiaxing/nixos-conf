@@ -56,6 +56,4 @@ in rec {
       files = attrValues (mapModules dir id);
       paths = files ++ concatLists (map (d: mapModulesRec' d id) dirs);
     in map func paths;
-
-
 }
