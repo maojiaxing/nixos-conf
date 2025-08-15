@@ -43,7 +43,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-wsl, home-manager, sops-nix, ... }:
+  outputs = inputs @ { self, nixpkgs, ... }:
     let
       args = {
         inherit self;
@@ -61,7 +61,9 @@
 
         hosts = mapHosts ./hosts;
         modules.default = import ./default.nix;
-
-
+        devShells.default = import ./shell.nix;
+        
+        overlays = mapModules ./overlays import;
+        packages = mapModules ./packages import;
       };
 }

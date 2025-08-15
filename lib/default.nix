@@ -25,6 +25,8 @@ let
 in
   let
     safeAttrValues = v: if builtins.isAttrs v then attrValues v else [];
-    merged = mergeAttrs' (safeAttrValues libs);
+    moduleNames = attrNames allModules;
+    evaluatedModules = lib.filterAttrs (name: _: lib.elem name moduleNames) libs;
+    merged = mergeAttrs' (safeAttrValues evaluatedModules);
   in
-    (if builtins.isAttrs libs then libs else {}) // merged
+    libs // merged
