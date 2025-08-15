@@ -14,7 +14,7 @@ in rec {
                 n != "default.nix" &&
                 n != "flake.nix" &&
                 hasSuffix ".nix" n
-        then nameValuePair (removeSuffix ".nix" n) (fn path)
+        then nameValuePair (removeSuffix ".nix" n) (func path)
         else nameValuePair "" null)
       (n: v: v != null && !(hasPrefix "_" n))
       (readDir dir);
