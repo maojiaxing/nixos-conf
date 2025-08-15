@@ -104,7 +104,7 @@ rec {
     in
       mergeAttrs' (map (system: mapAttrs (name: value: { ${name}.${system} = value; }) (outputsForSystem system)) systems);
 
-  mkFlake: input @ {
+  mkFlake = input @ {
     self,
     nixpkgs ? self.inputs.nixpkgs,
     nixpkgs-unstable ? self.inputs.nixpkgs-unstable or nixpkgs,
