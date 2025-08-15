@@ -95,7 +95,7 @@ rec {
   # mkSystemOutput :: inputs -> flake -> overlays -> systems -> attrs
   #
   # 构建跨系统输出，包含 apps、checks、devShells、packages。
-  mkSystemOutput = inputs: flake: overlays: systems:
+  mkSystemOutputs = inputs: flake: overlays: systems:
     map (system:
       filterAttrs (_: v: v.${system} != {}) {
         apps.${system} = flake.apps or {};
