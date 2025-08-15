@@ -3,6 +3,10 @@
 with lib;
 with self.lib;
 {
+  _module.args {
+    lib = lib // self.lib;
+  };
+
   imports = mapModulesRec' ./modules import;
 
   options = with types; {
