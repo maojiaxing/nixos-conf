@@ -12,5 +12,8 @@ with builtins;
       platform = "wsl";
     };
 
+    hardware = {
+      cpu = "intel"
+    };
   };
 }
