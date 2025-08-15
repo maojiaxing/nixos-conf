@@ -126,7 +126,7 @@ rec {
       overlayValues = attrValues (flake.overlays or {});
 
       nixosConfigurations = mapAttrs
-        (hostName: hostDef: buildHost {
+        (hostName: hostDef: mkHost {
           inherit hostName hostDef;
           inherit inputs;
           overlays = overlayValues;
