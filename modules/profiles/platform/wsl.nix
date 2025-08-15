@@ -5,15 +5,15 @@ let
   platform = config.modules.profiles.platform or "linux";
   isWSL = platform == "wsl";
 in
-{
+mkMerge [
   # 导入 nixos-wsl 模块
-  mkIf isWSL {
+  (mkIf isWSL {
     imports = [
       inputs.nixos-wsl.nixosModules.default
     ];
-  }
+  })
 
-  config = mkIf isWSL {
+  {config = mkIf isWSL {
     wsl = {
       enable = true;
       defaultUser = config.user.name;
@@ -38,5 +38,5 @@ in
     environment.systemPackages = with pkgs; [
       wslu
     ];
-  };
-}
+  };}
+]
