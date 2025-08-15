@@ -1,4 +1,4 @@
-{ self, lib, attrs, modules, ... }:
+{ lib, attrs, modules, ... }:
 
 with builtins;
 with lib;
