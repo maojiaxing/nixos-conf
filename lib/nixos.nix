@@ -79,7 +79,7 @@ rec {
           ++ (hostConfig.imports or [])
           ++ [{ modules = hostConfig.modules or {}; }]
           ++ [ (hostConfig.config or {}) (hostConfig.hardware or {}) ];
-      }
+      };
 
    buildPerSystemOutputs = { systems, overlays, inputs, flake, self }:
     let
