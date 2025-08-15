@@ -7,11 +7,11 @@ let
 in
 {
   # 导入 nixos-wsl 模块
-  (mkIf platform == "wsl" {
+  mkIf platform == "wsl" {
     imports = [
       inputs.nixos-wsl.nixosModules.default
     ];
-  })
+  }
 
   config = mkIf isWSL {
     wsl = {
