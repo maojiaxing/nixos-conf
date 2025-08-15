@@ -9,7 +9,7 @@ in rec {
       (n: v:
         let path = "${toString dir}/${n}"; in
         if v == "directory" && pathExists "${path}/default.nix"
-        then nameValuePair n (fn path)
+        then nameValuePair n (func path)
         else if v == "regular" &&
                 n != "default.nix" &&
                 n != "flake.nix" &&
