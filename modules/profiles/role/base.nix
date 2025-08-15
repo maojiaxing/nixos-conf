@@ -3,7 +3,7 @@
 with lib;
 let
   roleConfig = {
-    name = "base"
+    name = "base";
     inherits = [];
   };
 
