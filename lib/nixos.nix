@@ -67,6 +67,7 @@ rec {
         inherit system;
         specialArgs = {
           self = self';
+          lib = pkgs.lib // self'.lib;
         };
 
         modules =
