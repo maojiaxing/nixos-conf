@@ -110,7 +110,7 @@ rec {
     nixpkgs-unstable ? self.inputs.nixpkgs-unstable or nixpkgs,
     disko ? self.inputs.disko,
     ...
-  } @inputs: {
+  } @ inputs: {
     hosts ? {},
     overlays ? {},
     systems ? [ "x86_64-linux" ]
