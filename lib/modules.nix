@@ -8,16 +8,16 @@ in rec {
     attrs.mapFilterAttrs'
       (n: v:
         let path = "${toString dir}/${n}"; in
-          if v == "directory" && pathExists "${path}/default.nix"
-          then nameValuePair n (func path)
-          else if v == "regular" &&
+        if v == "directory" && pathExists "${path}/default.nix"
+        then nameValuePair n (fn path)
+        else if v == "regular" &&
                 n != "default.nix" &&
                 n != "flake.nix" &&
                 hasSuffix ".nix" n
-          then nameValuePair (removeSuffix ".nix" n) (func path)
-          else nameValuePair "" null)
-          (n: v: v != null && !(hasPrefix "_" n))
-        (readDir dir);
+        then nameValuePair (removeSuffix ".nix" n) (fn path)
+        else nameValuePair "" null)
+      (n: v: v != null && !(hasPrefix "_" n))
+      (readDir dir);
 
   mapModules' = dir: func:
     attrValues (mapModules dir func);
@@ -57,5 +57,5 @@ in rec {
       paths = files ++ concatLists (map (d: mapModulesRec' d id) dirs);
     in map func paths;
 
-  
+
 }
