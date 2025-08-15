@@ -16,7 +16,7 @@ mkMerge [
   {config = mkIf isWSL {
     wsl = {
       enable = true;
-      defaultUser = config.modules.profiles.user.name;
+      defaultUser = config.user.name;
       useWindowsDriver = true;
       startMenuLaunchers = true;
 
