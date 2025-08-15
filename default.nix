@@ -3,7 +3,7 @@
 with lib;
 with self.lib;
 {
-  _module.args {
+  _module.args = {
     lib = lib // self.lib;
   };
 
