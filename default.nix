@@ -4,10 +4,9 @@ with lib;
 with self.lib;
 let
   mainModule = {lib, config, options, pkgs, ...}:
-    let
-      inherit (self.lib) mkOpt attrs;
-    in
     {
+      _module.args.lib = lib // self.lib;
+
       imports = mapModulesRec' ./modules import;
 
       options = with types; {
