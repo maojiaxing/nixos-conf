@@ -8,7 +8,7 @@ rec {
     mkOption { inherit type default; };
 
   mkOpt' = type: default: description:
-    mkOption { inherit target default description };
+    mkOption { inherit target default description; };
 
   mkBoolOpt = default: mkOption {
     inherit default;
