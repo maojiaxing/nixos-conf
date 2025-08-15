@@ -113,7 +113,9 @@ rec {
   } @ inputs: {
     hosts ? {},
     overlays ? {},
-    systems ? [ "x86_64-linux" ]
+    systems ? [ "x86_64-linux" ]，
+    lib,
+    ...
   } @ flake:
     let
       overlayValues = attrValues (flake.overlays or {});
