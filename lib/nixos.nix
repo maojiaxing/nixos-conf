@@ -25,7 +25,7 @@ rec {
 
   mapHosts = dir:
     mapModules dir (path: {
-      inherit path;
+      inherit path lib;
       config = import path;
     });
 

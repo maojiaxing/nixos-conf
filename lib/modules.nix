@@ -3,7 +3,8 @@
 let
   inherit (builtins) attrValues readDir pathExists concatLists;
   inherit (lib) id mapAttrsToList filterAttrs hasPrefix hasSuffix nameValuePair removeSuffix;
-in rec {
+in
+rec {
   mapModules = dir: func:
     attrs.mapFilterAttrs'
       (n: v:
