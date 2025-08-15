@@ -10,25 +10,25 @@ in {
     config = mkIf cfg.enable {
         systemd.user.tmpfiles.rules = [ "d %h/.config/ssh 700 - - - -" ];
 
-        services.openssh {
+        services.openssh = {
             enable = true;
 
             settings = {
                 KbdInteractiveAuthentication = false;
 
-                PasswordAuthentication = false;
+                PasswordAuthentication = true;
             };
 
-            extraConfig = ''GSSAPIAuthentication no'';
+            # extraConfig = ''GSSAPIAuthentication no'';
 
-            hostKeys = [
-                {
-                    comment = "${config.networking.hostName}.local";
-                    path = "/etc/ssh/ssh_host_ed25519_key";
-                    rounds = 100;
-                    type = "ed25519";
-                }
-            ];
+            # hostKeys = [
+            #     {
+            #         comment = "${config.networking.hostName}.local";
+            #         path = "/etc/ssh/ssh_host_ed25519_key";
+            #         rounds = 100;
+            #         type = "ed25519";
+            #     }
+            # ];
         };
     };
 }
