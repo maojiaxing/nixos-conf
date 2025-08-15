@@ -71,19 +71,23 @@ rec {
         modules =
           [
             inputs.disko.nixosModules.disko
-            (if isFunction inputs.storage
-              then (attrs: { disko.devices = inputs.storage attrs; })
-              else { disko.devices = inputs.storage; })
+
             {
               nixpkgs.pkgs = pkgs;
               # 主机名直接使用定义的名称
               networking.hostName = mkDefault hostName;
             }
+
             ../.
           ]
           ++ (hostConfig.imports or [])
           ++ [{ modules = hostConfig.modules or {}; }]
-          ++ [ (hostConfig.config or {}) (hostConfig.hardware or {}) ];
+          ++ [ (hostConfig.config or {}) (hostConfig.hardware or {}) ]
+          ++ (lib.optional (inputs ? storage) (
+            if isFunction inputs.storage
+            then (attrs: { disko.devices = inputs.storage attrs; })
+            else { disko.devices = inputs.storage; }
+          ));
       };
 
    buildPerSystemOutputs = { systems, overlays, inputs, flake, self }:
