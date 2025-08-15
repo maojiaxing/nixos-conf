@@ -22,13 +22,13 @@ rec {
     config.allUnfree = true;
   };
 
- mapHosts = dir:
+  mapHosts = dir:
     mapModules dir (path: {
       inherit path;
       config = import path;
     });
 
-  mkHost = { hostname, hostDef, inputs, overlays}:
+  mkHost = { hostname, hostDef, inputs, overlays }:
     let
       path = hostDef.path;
 
@@ -72,8 +72,8 @@ rec {
           [
             inputs.disko.nixosModules.disko
             (if isFunction inputs.storage
-             then (attrs: { disko.devices = inputs.storage attrs; })
-             else { disko.devices = inputs.storage; })
+              then (attrs: { disko.devices = inputs.storage attrs; })
+              else { disko.devices = inputs.storage; })
             {
               nixpkgs.pkgs = pkgs;
               # 主机名直接使用定义的名称
