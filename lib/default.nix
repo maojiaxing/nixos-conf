@@ -5,10 +5,11 @@ let
   inherit (lib) attrValues foldr foldl;
 
   # mapModules gets special treatment because it's needed early!
-  inherit (attrs) attrsToList mergeAttrs';
-  inherit (modules) mapModules;
   attrs   = import ./attrs.nix   { inherit lib; };
   modules = import ./modules.nix { inherit lib attrs; };
+
+  inherit (attrs) attrsToList mergeAttrs';
+  inherit (modules) mapModules;
 
   sortLibsByDeps = modules:
     modules;
