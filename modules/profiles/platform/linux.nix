@@ -16,11 +16,11 @@ mkIf (config.modules.profiles.platform == "linux") {
         ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=21d";
       };
     };
-    
+
     timers.clear-log = {
       wantedBy = [ "timers.target" ];
       partOf = [ "clear-log.service" ];
       timerConfig.OnCalendar = "weekly UTC";
     };
-  }
+  };
 }
