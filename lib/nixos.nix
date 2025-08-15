@@ -22,6 +22,11 @@ rec {
     config.allUnfree = true;
   };
 
+ mapHosts = dir:
+    mapModules dir (path: {
+      inherit path;
+      config = import path;
+    });
 
   mkHost = { hostname, hostDef, inputs, overlays}:
     let
