@@ -1,11 +1,9 @@
 { lib, ... }:
 
 {
-
   system = "x86_64-linux";
 
   modules = {
-
     profiles = {
       platform = "wsl";
     };

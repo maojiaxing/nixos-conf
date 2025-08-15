@@ -2,16 +2,18 @@
 
 with lib;
 let
-  isWSL = config.modules.profiles.platform == "wsl";
+  platform = config.modules.profiles.platform or "linux";
+  isWSL = platform == "wsl";
 in
 {
-  config = mkIf isWSL {
-
-    # 导入 nixos-wsl 模块
+  # 导入 nixos-wsl 模块
+  (mkIf platform == "wsl") ({
     imports = [
       inputs.nixos-wsl.nixosModules.default
     ];
+  })
 
+  config = mkIf isWSL {
     wsl = {
       enable = true;
       defaultUser = config.user.name;
