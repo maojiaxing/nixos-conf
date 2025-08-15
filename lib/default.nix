@@ -20,4 +20,4 @@ let
   libModules = sortLibsByDeps (mapModules ./. import);
   libs = foldl libConcat { inherit lib pkgs; self = libs; } (attrsToList libModules);
 in
-  libs // (mergeAttrs' (attrValues libs))
+  (if builtins.isAttrs libs then libs else {}) // (mergeAttrs' (attrValues libs))
