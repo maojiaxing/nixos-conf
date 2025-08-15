@@ -55,7 +55,7 @@ rec {
         };
       };
 
-      self' = self // {
+      self' = inputs.self // {
         modules = allNixosModules;
         packages = self.packages.${system};
         devShell = self.devShell.${system};
