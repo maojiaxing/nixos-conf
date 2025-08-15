@@ -1,7 +1,5 @@
 { lib, ... }:
 
-with lib;
-with builtins;
 {
 
   system = "x86_64-linux";
@@ -13,7 +11,7 @@ with builtins;
     };
 
     hardware = {
-      cpu = "intel"
+      cpu = "intel";
     };
   };
 }
