@@ -18,6 +18,12 @@ let
   };
 
   libModules = sortLibsByDeps (mapModules ./. import);
-  libs = foldl libConcat { inherit lib pkgs; self = libs; } (attrsToList libModules);
+  # 先定义一个初始值，不递归引用 self，避免循环引用
+  libsInit = { inherit lib pkgs; };
+  libs = foldl libConcat libsInit (attrsToList libModules);
 in
-  libs // (mergeAttrs' (attrValues libs))
+  let
+    safeAttrValues = v: if builtins.isAttrs v then attrValues v else [];
+    merged = mergeAttrs' (safeAttrValues libs);
+  in
+    (if builtins.isAttrs libs then libs else {}) // merged
