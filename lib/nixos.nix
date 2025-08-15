@@ -104,17 +104,17 @@ rec {
     in
       mergeAttrs' (map (system: mapAttrs (name: value: { ${name}.${system} = value; }) (outputsForSystem system)) systems);
 
-  mkFlake = input @ {
+  mkFlake = {
     self,
     nixpkgs ? self.inputs.nixpkgs,
     nixpkgs-unstable ? self.inputs.nixpkgs-unstable or nixpkgs,
     disko ? self.inputs.disko,
     ...
-  }: flake @ {
+  } @inputs: {
     hosts ? {},
     overlays ? {},
     systems ? [ "x86_64-linux" ]
-  }:
+  } @ flake:
     let
       overlayValues = attrValues (flake.overlays or {});
 
