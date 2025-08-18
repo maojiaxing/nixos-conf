@@ -7,7 +7,12 @@ with lib;
   options = with types; {
     modules = {};
 
-    user = mkOpt attrs { name = "maojiaxing"; };
+    user.name = mkOption {
+      description = "The name of the primary user.";
+      type = str;
+      default = "maojiaxing";
+      example = "nix-user";
+    };
   };
 
   config = {
@@ -18,7 +23,7 @@ with lib;
       }
     ];
 
-    user = {
+    users.users.${config.user.name} = {
       description = mkDefault "The primary user account";
       extraGroups = [ "wheel" ];
       isNormalUser = true;
@@ -27,6 +32,6 @@ with lib;
       uid = 1000;
     };
 
-    users.users.${config.user.name} = mkAliasDefinitions options.user;
+    fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
   };
 }
