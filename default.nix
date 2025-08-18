@@ -5,7 +5,7 @@ let
   mainModule = {lib, config, options, pkgs, ...}:
     {
       modules = mapModulesRec' ./modules import;
-      imports = builtins.trace "aaaaaaaaaaaaaaaa ${modules}" modules;
+      imports = builtins.trace "aaaaaaaaaaaaaaaa ${builtins.toString modules}" modules;
 
       options = with types; {
         modules = {};
