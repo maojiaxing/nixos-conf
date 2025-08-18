@@ -4,11 +4,7 @@ let
   inherit (lib) mkOption types;
 in
 rec {
-  mkOpt = type: default:
-   mkOpt' {
-    inherit type default;
-    description = "";
-   };
+  mkOpt = type: default: mkOpt' type default "";
 
   mkOpt' = type: default: description:
   let
