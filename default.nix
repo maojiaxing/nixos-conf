@@ -7,11 +7,26 @@ with lib;
   options = with types; {
     modules = {};
 
-    user.name = mkOption {
-      description = "The name of the primary user.";
-      type = str;
-      default = "maojiaxing";
-      example = "nix-user";
+    user = {
+      name = mkOption {
+        description = "The name of the primary user.";
+        type = str;
+        default = "maojiaxing";
+        example = "nix-user";
+      };
+
+      packages = mkOption {
+        description = "A list of packages to be installed for the user.";
+        type = listOf package;
+        default = [];
+        example = lib.literalExpression ''
+          with pkgs; [
+            git
+            neovim
+            ripgrep
+          ]
+        '';
+      };
     };
   };
 
