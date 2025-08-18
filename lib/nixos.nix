@@ -75,7 +75,7 @@ rec {
           [
             inputs.disko.nixosModules.disko
 
-            inputs.nixos-wsl.nixosModules.default
+            
 
             {
               nixpkgs.pkgs = pkgs;
