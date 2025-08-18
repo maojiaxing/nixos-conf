@@ -11,6 +11,7 @@ with lib;
       description = "User-specific attributes, such as name and home directory.";
       type = attrs;
       example = { name = "nix-user"; };
+      default = { name = "maojiaxing"; };
     };
   };
 
