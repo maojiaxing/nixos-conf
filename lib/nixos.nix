@@ -26,7 +26,7 @@ rec {
   mapHosts = dir: inputs:
     mapModules dir (path: {
       inherit path lib inputs;
-      config = import path;
+      config = (import path) { inherit inputs lib; };
     });
 
   mkHost = { hostName, hostDef, inputs, overlays }:
