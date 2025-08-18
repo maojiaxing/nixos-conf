@@ -23,10 +23,10 @@ rec {
       config.allowUnfree = true;
     };
 
-  mapHosts = dir: inputs:
+  mapHosts = dir:
     mapModules dir (path: {
-      inherit path lib inputs;
-      config = (import path) { inherit inputs lib; };
+      inherit path lib;
+      config = import path;
     });
 
   mkHost = { hostName, hostDef, inputs, overlays }:
@@ -74,6 +74,8 @@ rec {
         modules =
           [
             inputs.disko.nixosModules.disko
+
+            inputs.nixos-wsl.nixosModules.default
 
             {
               nixpkgs.pkgs = pkgs;
