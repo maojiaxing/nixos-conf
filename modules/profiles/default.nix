@@ -30,4 +30,8 @@
       example = lib.literalExpression ''{ name = "nix-user"; home = "/home/nix-user"; }'';
     };
   };
+
+  config = {
+
+  };
 }
