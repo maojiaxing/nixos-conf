@@ -4,7 +4,7 @@ with lib;
 {
   options.modules.shell.direnv = {
     enable = mkOption {
-      inherit default;
+      description = "Whether to enable direnv to load and unload environment variables depending on the current directory.";
       type = types.bool;
       default = false;
     };
