@@ -15,15 +15,15 @@ with lib;
   };
 
   config = {
-    # assertions = [
-    #   {
-    #     assertion = config.user ? name;
-    #     message = "config.user.name is not set!";
-    #   }
-    # ];
+    assertions = [
+      {
+        assertion = config.user ? name;
+        message = "config.user.name is not set!";
+      }
+    ];
 
     user = {
-      description = mkDefault "The primary user account";
+      # description = mkDefault "The primary user account";
       extraGroups = [ "wheel" ];
       isNormalUser = true;
       home = "/home/${config.user.name}";
@@ -31,6 +31,6 @@ with lib;
       uid = 1000;
     };
 
-    users.users.${config.user.name} = mkAliasDefinitions options.user;
+    users.users.${config.user.name} = user;
   };
 }
