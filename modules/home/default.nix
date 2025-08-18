@@ -3,12 +3,12 @@
 with lib;
 {
   imports = [
-    inputs.home-manager.default
+    inputs.home-manager.nixosModules.default
   ];
 
   options.home = with lib.types; {
     homeDir = mkOpt str "${config.user.home}";
-    configDir = mkOpt str "";
+    configDir = mkOpt str "${config.user.home}/.config";
   };
 
   config = {
