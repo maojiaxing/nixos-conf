@@ -1,34 +1,11 @@
 { lib, config, inputs, pkgs, ...}:
 
 with lib;
-let
-  platform = config.modules.profiles.platform or "linux";
-  isWSL = platform == "wsl";
-in
-mkMerge [
-  # 导入 nixos-wsl 模块
-  (mkIf isWSL {
-    imports = [
-      inputs.nixos-wsl.nixosModules.default
-    ];
+mkIf (config.modules.profiles.platform == "wsl") {
 
-    wsl = {
-      enable = true;
-      defaultUser = config.modules.profiles.user.name;
-      useWindowsDriver = true;
-      startMenuLaunchers = true;
+  imports = [
+    inputs.nixos-wsl.nixosModules.default
+  ];
 
-       wslConf = {
-        automount.root = "/mnt";
-        interop.appendWindowsPath = false;
-        network.generateHosts = false;
-      };
-    };
-
-    hardware.graphics.enable = true;
-
-    # 禁用不需要的服务
-    systemd.services.systemd-resolved.enable = false;
-    networking.dhcpcd.enable = false;
-  })
-]
+  
+}
