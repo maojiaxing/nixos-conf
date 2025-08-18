@@ -5,7 +5,7 @@ mkIf (config.modules.profiles.platform == "wsl") (
   mkMerge [
     {
       imports = [
-        inputs.nixos-wsl.nixosModules.default;
+        inputs.nixos-wsl.nixosModules.default
       ];
     }
 
