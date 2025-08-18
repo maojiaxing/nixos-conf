@@ -3,7 +3,11 @@
 with lib;
 {
   options.modules.shell.direnv = {
-    enable = mkBootOpt false;
+    enable = mkOption {
+      inherit default;
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf config.modules.shell.direnv.enable {
