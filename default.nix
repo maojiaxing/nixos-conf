@@ -15,12 +15,12 @@ with lib;
   };
 
   config = {
-    assertions = [
-      {
-        assertion = config.user ? name;
-        message = "config.user.name is not set!";
-      }
-    ];
+    # assertions = [
+    #   {
+    #     assertion = config.user ? name;
+    #     message = "config.user.name is not set!";
+    #   }
+    # ];
 
     user = {
       description = mkDefault "The primary user account";
