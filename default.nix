@@ -24,7 +24,7 @@ with lib;
     ];
 
     user = {
-      # description = mkDefault "The primary user account";
+      description = mkDefault "The primary user account";
       extraGroups = [ "wheel" ];
       isNormalUser = true;
       home = "/home/${config.user.name}";
@@ -32,6 +32,6 @@ with lib;
       uid = 1000;
     };
 
-    users.users.${config.user.name} = user;
+    users.users.${config.user.name} = mkAliasDefinitions options.user;
   };
 }
