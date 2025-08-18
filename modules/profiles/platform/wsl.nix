@@ -9,6 +9,6 @@ with lib;
 
     wsl.enable = true;
     wsl.defaultUser = config.user.name;
-  }
+  };
 }
 
