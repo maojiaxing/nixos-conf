@@ -7,12 +7,10 @@ let
     inherits = [];
   };
 
-  roles = config.modules.profiles.roles or [];
-  expandRoles = resolveInheritance roles;
-  hasRole = role: elem role expandRoles;
+  roles = mkRoles  roleConfig {};
 in
 mkMerge [
-  (mkIf (hasRole "base") {
+  (mkIf (roles.has "base") {
     system.stateVersion = mkDefault "25.05";
 
     boot = {

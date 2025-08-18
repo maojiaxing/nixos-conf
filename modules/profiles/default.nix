@@ -16,7 +16,7 @@
       example = "darwin";
     };
 
-    role = lib.mkOption {
+    roles = lib.mkOption {
       description = "A list of roles to apply to the host.";
       type = lib.types.listOf lib.types.str;
       default = [ "base" ];
