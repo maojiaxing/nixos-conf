@@ -1,17 +1,11 @@
 { lib, config, inputs, pkgs, ...}:
 
 with lib;
-mkIf (config.modules.profiles.platform == "wsl") (
-  mkMerge [
-    {
-      imports = [
-        inputs.nixos-wsl.nixosModules.default
-      ];
-    }
+mkIf (config.modules.profiles.platform == "wsl") {
+  imports = [
+    inputs.nixos-wsl.nixosModules.default
+  ];
 
-    {
-      wsl.enable = true;
-      wsl.defaultUser = config.user.name;
-    }
-  ]
-)
+   wsl.enable = true;
+   wsl.defaultUser = config.user.name;
+}
