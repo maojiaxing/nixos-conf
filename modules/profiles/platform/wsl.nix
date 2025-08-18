@@ -7,8 +7,6 @@ with lib;
   ];
 
   config = mkIf(config.modules.profiles.platform == "wsl") {
-
-
     wsl.enable = true;
     wsl.defaultUser = config.user.name;
   };
