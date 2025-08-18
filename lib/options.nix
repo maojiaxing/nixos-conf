@@ -1,14 +1,14 @@
 { lib, ... }:
 
 let
-  inherit (lib) mkOption types isAttr;
+  inherit (lib) mkOption types isAttrs;
 in
 rec {
   mkOpt = type: default: mkOpt' type default "";
 
   mkOpt' = type: default: description:
   let
-    isEnum = isAttr type && type ? "_type" && type._type == "enum";
+    isEnum = isAttrs type && type ? "_type" && type._type == "enum";
     in
       mkOption {
         type = if isEnum then types.enum type.values else type;
