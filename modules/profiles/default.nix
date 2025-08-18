@@ -10,4 +10,4 @@ mkMerge [
       role = mkOpt (listOf str) [ "base" ];
       user = mkOpt attrs {};
   }
-]
+];
