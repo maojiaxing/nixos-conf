@@ -2,11 +2,11 @@
 
 with lib;
 mkIf (config.modules.profiles.platform == "wsl") {
-  config = {
-    imports = [
+  imports = [
       inputs.nixos-wsl.nixosModules.default
-    ];
+  ];
 
+  config = {
     wsl.enable = true;
     wsl.defaultUser = config.user.name;
   };
