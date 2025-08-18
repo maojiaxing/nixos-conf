@@ -7,7 +7,7 @@ let
     inherits = [];
   };
 
-  roles = mkRoles  roleConfig {};
+  roles = mkRoles roleConfig config.modules.profiles.roles;
 in
 mkMerge [
   (mkIf (roles.has "base") {
