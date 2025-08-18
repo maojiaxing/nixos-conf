@@ -10,7 +10,7 @@ with lib;
     user = mkOption {
       description = "User-specific attributes, such as name and home directory.";
       type = attrs;
-      default = { name = ""; };
+      example = { name = "nix-user"; };
     };
   };
 
