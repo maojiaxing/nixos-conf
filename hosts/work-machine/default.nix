@@ -8,6 +8,7 @@
       platform = "wsl";
       user.name = "maojiaxing";
     };
+  };
 
   #   hardware = {
   #     cpu = "intel";
