@@ -68,6 +68,7 @@ rec {
         specialArgs = {
           self = self';
           lib = pkgs.lib.recursiveUpdate pkgs.lib self'.lib;
+          inputs = inputs;
         };
 
         modules =
