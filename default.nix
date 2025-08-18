@@ -11,7 +11,7 @@ with lib;
       description = "User-specific attributes, such as name and home directory.";
       type = attrs;
       default = { name = ""; };
-    }
+    };
   };
 
   config = {
