@@ -6,7 +6,7 @@ with lib;
     enable = mkBootOpt false;
   };
 
-  config = mkIf config.modules.shell.direnv {
+  config = mkIf config.modules.shell.direnv.enable {
     programs.direnv.enable = true;
   };
 }
