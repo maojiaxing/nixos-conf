@@ -17,5 +17,5 @@ in {
     in {
       list = expandedRoles;
       has = role: elem role expandedRoles;
-    }
+    };
 }
