@@ -7,12 +7,7 @@ with lib;
   options = with types; {
     modules = {};
 
-    user = mkOption {
-      description = "User-specific attributes, such as name and home directory.";
-      type = attrs;
-      example = { name = "nix-user"; };
-      default = { name = "maojiaxing"; };
-    };
+    user =  user = mkOpt attrs { name = "maojiaxing"; };
   };
 
   config = {
