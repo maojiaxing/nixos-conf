@@ -7,5 +7,5 @@ mkIf (config.modules.profiles.platform == "wsl") {
     inputs.nixos-wsl.nixosModules.default
   ];
 
-  
+  wsl.enable = true;
 }
