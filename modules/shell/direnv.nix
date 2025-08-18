@@ -3,11 +3,7 @@
 with lib;
 {
   options.modules.shell.direnv = {
-    enable = mkOption {
-      description = "Whether to enable direnv to load and unload environment variables depending on the current directory.";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "direnv integration";
   };
 
   config = mkIf config.modules.shell.direnv.enable {
