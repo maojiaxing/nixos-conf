@@ -4,8 +4,9 @@ with lib;
 let cfg = config.modules.profiles.user;
   username = cfg.name;
   key = "";
-in mkIf (username == "maojiaxing") {
-  config = {
+in
+mkMerge [
+  (mkIf (username == "maojiaxing") {
     user.name = username;
-  };
-}
+  })
+]
