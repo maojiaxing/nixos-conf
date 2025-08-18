@@ -33,4 +33,4 @@ with lib;
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;
   };
-};
+}
