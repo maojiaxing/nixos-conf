@@ -5,7 +5,7 @@
 
   modules = {
     profiles = {
-      platform = "linux";
+      platform = "wsl";
       user.name = "maojiaxing";
     };
   };
