@@ -2,7 +2,6 @@
 
 {
   options.modules.profiles = {
-
     hardware = lib.mkOption {
       description = "A list of hardware definition for the custom host.";
       type = lib.types.listOf lib.types.str;
