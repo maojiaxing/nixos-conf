@@ -35,8 +35,8 @@ mkMerge [
     networking.dhcpcd.enable = false;
 
     # WSL 特定的包
-    environment.systemPackages = with pkgs; [
-      wslu
-    ];
+    # environment.systemPackages = with pkgs; [
+    #   wslu
+    # ];
   };}
 ]
