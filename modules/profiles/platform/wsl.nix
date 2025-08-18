@@ -3,7 +3,11 @@
 with lib;
 mkIf (config.modules.profiles.platform == "wsl") (
   mkMerge [
-    inputs.nixos-wsl.nixosModules.default
+    {
+      imports = [
+        inputs.nixos-wsl.nixosModules.default;
+      ];
+    }
 
     {
       wsl.enable = true;
