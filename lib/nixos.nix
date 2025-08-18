@@ -23,9 +23,9 @@ rec {
       config.allowUnfree = true;
     };
 
-  mapHosts = dir:
+  mapHosts = dir: inputs:
     mapModules dir (path: {
-      inherit path lib;
+      inherit path lib inputs;
       config = import path;
     });
 

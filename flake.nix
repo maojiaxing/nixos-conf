@@ -59,10 +59,10 @@
         systems = [ "x86_64-linux" "aarch64-linux" ];
         inherit lib;
 
-        hosts = mapHosts ./hosts;
+        hosts = mapHosts ./hosts inputs;
         modules.default = import ./default.nix;
         # devShells.default = import ./shell.nix;
-        
+
         overlays = mapModules ./overlays import;
         packages = mapModules ./packages import;
       };
