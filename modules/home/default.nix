@@ -7,8 +7,8 @@ with lib;
   ];
 
   options.home = with lib.types; {
-    homeDir = mkOpt str "${config.user.home}";
-    configDir = mkOpt str "${config.user.home}/.config";
+    homeDir = mkOpt str "/home/${config.user.home}";
+    configDir = mkOpt str "/home/${config.user.home}/.config";
   };
 
   config = {
