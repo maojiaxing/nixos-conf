@@ -124,6 +124,7 @@ rec {
   } @ inputs: {
     hosts ? {},
     overlays ? {},
+    packages ? {},
     systems ? [ "x86_64-linux" ],
     lib,
     ...
