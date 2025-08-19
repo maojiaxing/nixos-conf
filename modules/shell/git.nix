@@ -12,9 +12,10 @@ in {
       git
     ];
 
-    home.file.".config/git" = {
-      source = "${configRoot}/config/git";
-      recursive = true;
+    home.configFile = {
+      "git/config".source     = "${configRoot}/git/config";
+      "git/ignore".source     = "${configRoot}/git/ignore";
+      "git/attributes".source = "${configRoot}/git/attributes";
     };
   };
 }
