@@ -45,7 +45,7 @@ rec {
         self = inputs.self;
       };
 
-      system = hostConfig.system ? "x86_64-linux";
+      system = hostConfig.system or "x86_64-linux";
 
       pkgs = mkPkgs {
         inherit system overlays;
