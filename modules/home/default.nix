@@ -1,11 +1,11 @@
-{ lib, config, options, pkgs, home-manager, ...}:
+{ lib, config, options, pkgs, inputs, ...}:
 
 with lib;
 let
   cfg = config.home;
 in {
   imports = [
-    home-manager.nixosModules.default
+    inputs.home-manager.nixosModules.default
   ];
 
   options.home = with lib.types; {
@@ -51,7 +51,7 @@ in {
      home-manager = {
       useUserPackages = true;
 
-      user.${config.user.name} = {
+      users.${config.user.name} = {
         home = {
           file = mkAliasDefinitions options.home.file;
           # stateVersion = config.system.stateVersion;
