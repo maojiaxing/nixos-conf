@@ -54,11 +54,11 @@ in {
       "d %h/.local/state/zsh 700 - - - -"
     ];
 
-    home.configFile = {
-      "zsh" = {
-        source = "${config.home.homeDir}/.config/zsh"; recursive = true;
-      };
+    # home.configFile = {
+    #   "zsh" = {
+    #     source = "${config.home.homeDir}/.config/zsh"; recursive = true;
+    #   };
 
-    };
+    # };
   };
 }
