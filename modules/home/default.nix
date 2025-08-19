@@ -1,7 +1,9 @@
 { lib, config, options, pkgs, inputs, ...}:
 
 with lib;
-{
+let
+  cfg = config.home;
+in {
   imports = [
     inputs.home-manager.nixosModules.default
   ];
@@ -41,5 +43,32 @@ with lib;
         XDG_DESKTOP_DIR = cfg.fakeDir;
       };
     };
+
+    home.file =
+      mapAttrs' (k: v: nameValuePair "${cfg.fakeDir}/${k}" v)
+        cfg.fakeFile;
+
+     home-manager = {
+      useUserPackages = true;
+
+      user.${config.user.name} = {
+        home = {
+          file = mkAliasDefinitions options.home.file;
+          stateVersion = config.system.stateVersion;
+        };
+
+        xdg = {
+          configFile = mkAliasDefinitions options.home.configFile;
+          dataFile   = mkAliasDefinitions options.home.dataFile;
+
+          # Force these, since it'll be considered an abstraction leak to use
+          # home-manager's API anywhere outside this module.
+          cacheHome  = mkForce cfg.cacheDir;
+          configHome = mkForce cfg.configDir;
+          dataHome   = mkForce cfg.dataDir;
+          stateHome  = mkForce cfg.stateDir;
+        };
+      };
+     };
   };
 }
