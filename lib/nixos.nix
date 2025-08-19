@@ -82,7 +82,7 @@ rec {
               networking.hostName = mkDefault hostName;
             }
 
-            ../.
+            ../blueprint.nix
           ]
           ++ (hostConfig.imports or [])
           ++ [{ modules = hostConfig.modules or {}; }]

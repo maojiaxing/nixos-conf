@@ -60,7 +60,7 @@
         inherit lib;
 
         hosts = mapHosts ./hosts;
-        modules.default = import ./default.nix;
+        modules.default = import ./blueprint.nix;
         # devShells.default = import ./shell.nix;
 
         overlays = mapModules ./overlays import;
