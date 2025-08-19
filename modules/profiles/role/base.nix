@@ -11,7 +11,7 @@ let
 in
 mkMerge [
   (mkIf (roles.has "base") {
-    system.stateVersion = mkDefault "25.05";
+    system.stateVersion = mkDefault "24.11";
 
     boot = {
       # 默认使用最新内核
