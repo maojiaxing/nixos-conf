@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.modules.xdg;
-
+  home = config.home;
 in {
 
   options.modules.xdg = {
