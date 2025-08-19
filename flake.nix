@@ -56,8 +56,9 @@
       with builtins;
       with lib;
       mkFlake inputs {
+        inherit inputs lib;
+
         systems = [ "x86_64-linux" "aarch64-linux" ];
-        inherit lib;
 
         hosts = mapHosts ./hosts;
         modules.default = import ./blueprint.nix;
