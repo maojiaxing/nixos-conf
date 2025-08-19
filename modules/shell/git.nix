@@ -1,4 +1,4 @@
-{ lib, config, options, pkgs, ...}:
+{ lib, config, options, pkgs, configRoot, ...}:
 
 with lib;
 let cfg = config.modules.shell.git;
