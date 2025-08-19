@@ -11,5 +11,10 @@ in {
     user.packages = with pkgs; [
       git
     ];
+
+    home.file.".config/git" = {
+      source = "${configRoot}/config/git";
+      recursive = true;
+    };
   };
 }
