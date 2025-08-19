@@ -43,24 +43,24 @@ in {
         XDG_WORKSPACE_DIR="${home.fakeDir}/Workspace"
       '';
 
-      system.userActivationScripts.initXDG = ''
-        for dir in "$XDG_DESKTOP_DIR" "$XDG_STATE_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" "$XDG_BIN_HOME" "$XDG_CONFIG_HOME"; do
-          mkdir -p "$dir" -m 700
-        done
+      # system.userActivationScripts.initXDG = ''
+      #   for dir in "$XDG_DESKTOP_DIR" "$XDG_STATE_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" "$XDG_BIN_HOME" "$XDG_CONFIG_HOME"; do
+      #     mkdir -p "$dir" -m 700
+      #   done
 
-        # Populate the fake home with .local and .config, so certain things are
-        # still in scope for the jailed programs, like fonts, data, and files,
-        # should they choose to use them at all.
-        fakehome="${home.fakeDir}"
-        mkdir -p "$fakehome" -m 755
-        [ -e "$fakehome/.local" ]  || ln -sf ~/.local  "$fakehome/.local"
-        [ -e "$fakehome/.config" ] || ln -sf ~/.config "$fakehome/.config"
+      #   # Populate the fake home with .local and .config, so certain things are
+      #   # still in scope for the jailed programs, like fonts, data, and files,
+      #   # should they choose to use them at all.
+      #   fakehome="${home.fakeDir}"
+      #   mkdir -p "$fakehome" -m 755
+      #   [ -e "$fakehome/.local" ]  || ln -sf ~/.local  "$fakehome/.local"
+      #   [ -e "$fakehome/.config" ] || ln -sf ~/.config "$fakehome/.config"
 
-        # Avoid the creation of ~/.pki (typically by Firefox), by ensuring NSS
-        # finds this directory.
-        rm -rf "$HOME/.pki"
-        mkdir -p "$XDG_DATA_HOME/pki/nssdb"
-      '';
+      #   # Avoid the creation of ~/.pki (typically by Firefox), by ensuring NSS
+      #   # finds this directory.
+      #   rm -rf "$HOME/.pki"
+      #   mkdir -p "$XDG_DATA_HOME/pki/nssdb"
+      # '';
 
       services.dbus.implementation = "broker";
     }
