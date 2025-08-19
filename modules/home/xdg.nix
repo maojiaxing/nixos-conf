@@ -21,7 +21,6 @@ in {
         variables = {
           BASH_COMPLETION_USER_FILE = "$XDG_CONFIG_HOME/bash/completion";
           ENV             = "$XDG_CONFIG_HOME/shell/shrc";  # sh, ksh
-
           WGETRC          = "$XDG_CONFIG_HOME/wgetrc";
         };
 
