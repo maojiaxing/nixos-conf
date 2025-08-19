@@ -54,7 +54,7 @@ in {
       users.${config.user.name} = {
         home = {
           file = mkAliasDefinitions options.home.file;
-          # stateVersion = config.system.stateVersion;
+          stateVersion = config.system.stateVersion;
         };
 
         xdg = {
