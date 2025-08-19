@@ -3,6 +3,8 @@
 with lib;
 mkIf (config.modules.profiles.platform == "linux") {
   config = {
+    catppuccin.mako.enable = false;
+
     nix.gc = {
       automatic = true;
       dates = "weekly";
