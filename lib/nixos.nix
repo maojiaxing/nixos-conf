@@ -149,10 +149,8 @@ rec {
         overlays = overlayValues;
       };
 
-      passthroughAttrs = filterAttrs (n: _: !elem n [
-        "apps" "bundlers" "checks" "devices" "devShells" "hosts" "modules"
-        "packages" "storage" "systems"
-      ]) flake;
+      elems = [ "apps" "bundlers" "checks" "devices" "devShells" "hosts" "modules" "packages" "storage" "systems" ];
+      passthroughAttrs = filterAttrs (n: _: !elem n elems) flake;
 
     in
       passthroughAttrs // {
