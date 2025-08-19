@@ -4,7 +4,7 @@ with lib;
 let cfg = config.modules.shell.git;
 in {
   options.modules.shell.git = {
-      enable = mkBoolOpt false;
+      enable = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable {
@@ -13,9 +13,10 @@ in {
     ];
 
     home.configFile = {
-      "git/config".source     = "${configRoot}/git/config";
-      "git/ignore".source     = "${configRoot}/git/ignore";
-      "git/attributes".source = "${configRoot}/git/attributes";
+      "git" = {
+        source = "${configRoot}/config/git";
+        recursive = true;
+      };
     };
   };
 }
