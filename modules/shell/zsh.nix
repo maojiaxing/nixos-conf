@@ -56,7 +56,7 @@ in {
 
     home.configFile = {
       "zsh" = {
-        source = "${config.home.homeDir}/zsh"; recursive = true;
+        source = "${config.home.homeDir}/.config/zsh"; recursive = true;
       };
 
     };
