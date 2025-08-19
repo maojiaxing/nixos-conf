@@ -75,8 +75,6 @@ rec {
           [
             inputs.disko.nixosModules.disko
 
-            
-
             {
               nixpkgs.pkgs = pkgs;
               # 主机名直接使用定义的名称
@@ -95,12 +93,12 @@ rec {
           ));
       };
 
-   buildPerSystemOutputs = { systems, overlays, inputs, flake, self }:
+   buildPerSystemOutputs = { systems, overlays, inputs, flake, self, lib, ...}:
     let
       outputsForSystem = system:
         let
           pkgs = mkPkgs {
-            inherit system overlays;
+            inherit system overlays lib;
             pkgsPath = inputs.nixpkgs;
           };
           packageBuilder = packageAttrs:
@@ -144,7 +142,7 @@ rec {
         hosts;
 
       perSystemOutputs = buildPerSystemOutputs {
-        inherit systems self;
+        inherit systems self lib;
         flake = flake;
         inputs = inputs;
         overlays = overlayValues;
