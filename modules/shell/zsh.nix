@@ -1,4 +1,4 @@
-{ lib, config, options, pkgs, ...}:
+{ lib, config, options, pkgs, configRoot, ...}:
 
 with lib;
 let
@@ -54,11 +54,12 @@ in {
       "d %h/.local/state/zsh 700 - - - -"
     ];
 
-    # home.configFile = {
-    #   "zsh" = {
-    #     source = "${config.home.homeDir}/.config/zsh"; recursive = true;
-    #   };
+    home.configFile = {
+      "zsh" = {
+        source = "${configRoot}/config/zsh";
+        recursive = true;
+      };
 
-    # };
+    };
   };
 }

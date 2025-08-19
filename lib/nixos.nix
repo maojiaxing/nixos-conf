@@ -70,6 +70,7 @@ rec {
           self = self';
           lib = pkgs.lib.recursiveUpdate pkgs.lib self'.lib;
           inputs = inputs;
+          configRoot = self;
         };
 
         modules =
