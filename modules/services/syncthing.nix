@@ -8,7 +8,7 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = if cfg.enable {
+  config = mkIf cfg.enable {
     services.syncthing = rec {
       enable = true;
       openDefaultPorts = true;
@@ -16,5 +16,5 @@ in {
       configDir = "${config.home.configDir}/syncthing";
       dataDir = "${config.home.dataDir}/syncthing";
     };
-  }
+  };
 }
