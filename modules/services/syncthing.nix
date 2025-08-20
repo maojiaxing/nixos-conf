@@ -16,5 +16,5 @@ in {
       configDir = "${config.home.configDir}/syncthing";
       dataDir = "${config.home.dataDir}/syncthing";
     };
-  };
+  }
 }
