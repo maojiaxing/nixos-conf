@@ -71,7 +71,7 @@ in {
       };
     };
 
-    home.activation.cleanupConfigDir = lib.hm.dag.entryBefore ["writeBoundary"] ''
+    system.activationScripts.cleanupConfigDir = ''
       # --- Automated cleanup script ---
       # The goal of this script is to delete all content in the ~/.config/ directory,
       # while preserving the 'nixos' directory.
