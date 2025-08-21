@@ -76,7 +76,7 @@ in {
       # The goal of this script is to delete all content in the ~/.config/ directory,
       # while preserving the 'nixos' directory.
 
-      CONFIG_DIR = "${cfg.configDir}"
+      CONFIG_DIR="${cfg.configDir}"
 
       if [ -d "$CONFIG_DIR" ]; then
         echo "Cleaning up the $CONFIG_DIR directory..."
