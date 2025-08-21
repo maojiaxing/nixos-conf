@@ -21,6 +21,8 @@ in {
     dataDir    = mkOpt str "/home/${config.user.name}/.local/share";
     stateDir   = mkOpt str "/home/${config.user.name}/.local/state";
     fakeDir    = mkOpt str "/home/${config.user.name}/.local/user";
+
+    preserveConfigPaths = mkOpt (attrsOf (listOf str)) { paths = [ "nixos" ];} "Per-directory cleanup exclude list";  
   };
 
   config = {
@@ -71,21 +73,24 @@ in {
       };
     };
 
-    system.activationScripts.cleanupConfigDir = ''
-      # --- Automated cleanup script ---
-      # The goal of this script is to delete all content in the ~/.config/ directory,
-      # while preserving the 'nixos' directory.
+    system.activationScripts.cleanupConfigDir = 
+      let
+        excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") (cfg.preserveConfigPaths.paths or []));
+      in ''
+        # --- Automated cleanup script ---
+        # The goal of this script is to delete all content in the ~/.config/ directory,
+        # while preserving the 'nixos' directory.
 
-      CONFIG_DIR="${cfg.configDir}"
+        CONFIG_DIR="${cfg.configDir}"
 
-      if [ -d "$CONFIG_DIR" ]; then
-        echo "Cleaning up the $CONFIG_DIR directory..."
+        if [ -d "$CONFIG_DIR" ]; then
+          echo "Cleaning up the $CONFIG_DIR directory..."
 
-        ${pkgs.findutils}/bin/find "$CONFIG_DIR" -mindepth 1 -maxdepth 1 ! -name nixos -exec rm -rf '{}' +
+          ${pkgs.findutils}/bin/find "$CONFIG_DIR" -mindepth 1 -maxdepth 1 ! -name nixos -exec rm -rf '{}' +
 
-        echo "Cleanup completed. All files in "$CONFIG_DIR" except for 'nixos' have been deleted."
-      fi
-    '';
+          echo "Cleanup completed. All files in "$CONFIG_DIR" except for 'nixos' have been deleted."
+        fi
+      '';
 
   };
 }
