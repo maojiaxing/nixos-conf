@@ -113,4 +113,10 @@ if [[ $TERM != dumb ]]; then
   fi
 
   source $ZDOTDIR/aliases.zsh
+  source $ZDOTDIR/functions.zsh
+  source $ZDOTDIR/extra.zshrc
+
+  autopair-init
+
+  cfg=~/.config
 fi
