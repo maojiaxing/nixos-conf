@@ -98,5 +98,6 @@ in {
         rm -frv "$XDG_CACHE_HOME"/zsh/*(DN)
         rm -fv "$ZDOTDIR"/**/*.zwc(D.N)
       '';
+    };
   };
 }
