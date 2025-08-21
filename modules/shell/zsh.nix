@@ -93,10 +93,10 @@ in {
         '';
       };
 
-    activation.zshCleanup = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-      rm -fv "$ZGEN_DIR"/init.zsh
-      rm -frv "$XDG_CACHE_HOME"/zsh/*(DN)
-      rm -fv "$ZDOTDIR"/**/*.zwc(D.N)
-    '';
+      activation.zshCleanup = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+        rm -fv "$ZGEN_DIR"/init.zsh
+        rm -frv "$XDG_CACHE_HOME"/zsh/*(DN)
+        rm -fv "$ZDOTDIR"/**/*.zwc(D.N)
+      '';
   };
 }
