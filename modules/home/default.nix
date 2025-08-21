@@ -69,6 +69,23 @@ in {
           stateHome  = mkForce cfg.stateDir;
         };
       };
-     };
+    };
+
+    home.activation.cleanupConfigDir = lib.hm.dag.entryBefore ["writeBoundary"] ''
+      # --- Automated cleanup script ---
+      # The goal of this script is to delete all content in the ~/.config/ directory,
+      # while preserving the 'nixos' directory.
+
+      CONFIG_DIR = ${cfg.configDir;}
+
+      if [ -d "$CONFIG_DIR" ]; then
+        echo "Cleaning up the $CONFIG_DIR directory..."
+
+        ${pkgs.findutils}/bin/find "$CONFIG_DIR" -mindepth 1 -maxdepth 1 ! -name nixos -exec rm -rf '{}' +
+
+        echo "Cleanup completed. All files in "$CONFIG_DIR" except for 'nixos' have been deleted."
+      fi
+    '';
+
   };
 }
