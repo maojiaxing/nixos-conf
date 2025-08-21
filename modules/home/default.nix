@@ -1,10 +1,4 @@
-{ inputs, ...}:
-
-inputs.lib.importModules[
-  inputs.home-manager.nixosModules.home-manager
-]
-
-({lib, config, options, pkgs, ...}:
+{lib, config, options, pkgs, ...}:
 
 with lib;
 let
@@ -94,4 +88,4 @@ in {
     '';
 
   };
-})
+}
