@@ -47,6 +47,7 @@
 
   # Left prompt segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    os_icon
     # context                 # user@host
     dir                       # current directory
     vcs                       # git status
@@ -70,11 +71,13 @@
   typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SEGMENT_SEPARATOR=        # no end-of-line symbol
   typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=           # no segment icons
 
+  # OS identifier color.
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=#33c2c4
+  typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=%B$'❯›'
+
   # Add an empty line before each prompt except the first. This doesn't emulate the bug
   # in Pure that makes prompt drift down whenever you use the Alt-C binding from fzf or similar.
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
-
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_SUBST='%bε%b >> '
 
   # Magenta prompt symbol if the last command succeeded.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS}_FOREGROUND=$magenta

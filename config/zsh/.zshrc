@@ -115,6 +115,7 @@ if [[ $TERM != dumb ]]; then
   source $ZDOTDIR/aliases.zsh
   source $ZDOTDIR/functions.zsh
   source $ZDOTDIR/extra.zshrc
+  source $ZDOTDIR/.p10k.zsh
 
   autopair-init
 
