@@ -31,6 +31,8 @@ in {
       enableLsColors = false;
     };
 
+    users.defaultUserShell = pkgs.zsh;
+
     user.packages = with pkgs; [
       bat      # a better cat
       bc
