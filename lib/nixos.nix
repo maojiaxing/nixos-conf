@@ -50,11 +50,11 @@ rec {
       pkgs = mkPkgs {
         inherit system overlays;
         pkgsPath = inputs.nixpkgs;
-      } // {
-        unstable = mkPkgs {
-          inherit system overlays;
-          pkgsPath = inputs.nixpkgs-unstable;
-        };
+      };
+      
+      unstable-pkgs = mkPkgs {
+        inherit system overlays;
+        pkgsPath = inputs.nixpkgs-unstable;
       };
 
       self' = inputs.self // {
@@ -71,6 +71,7 @@ rec {
           lib = pkgs.lib.recursiveUpdate pkgs.lib self'.lib;
           inputs = inputs;
           configRoot = inputs.self;
+          unstable-pkgs = unstable-pkgs;
         };
 
         modules =
@@ -134,11 +135,13 @@ rec {
   } @ flake:
     let
       overlayValues = attrValues (flake.overlays or {});
+     
+      tracedOverlays = builtins.trace "Loaded overlays: ${toString (builtins.attrNames flake.overlays)}" overlayValues;
 
       nixosConfigurations = mapAttrs
         (hostName: hostDef: mkHost {
           inherit hostName hostDef inputs;
-          overlays = overlayValues;
+          overlays = tracedOverlays;
         })
         hosts;
 
@@ -146,7 +149,7 @@ rec {
         inherit systems self lib;
         flake = flake;
         inputs = inputs;
-        overlays = overlayValues;
+        overlays = tracedOverlays;
       };
 
       elems = [ "apps" "bundlers" "checks" "devices" "devShells" "hosts" "modules" "packages" "storage" "systems" ];

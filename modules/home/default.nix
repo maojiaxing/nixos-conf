@@ -22,7 +22,7 @@ in {
     stateDir   = mkOpt str "/home/${config.user.name}/.local/state";
     fakeDir    = mkOpt str "/home/${config.user.name}/.local/user";
 
-    preserveConfigPaths = mkOpt (attrsOf (listOf str)) { paths = [ "nixos" ];} "Per-directory cleanup exclude list";  
+    # preserveConfigPaths = mkOpt (attrsOf (listOf str)) { paths = [ "nixos" ];} "Per-directory cleanup exclude list";  
   };
 
   config = {
@@ -75,7 +75,8 @@ in {
 
     system.activationScripts.cleanupConfigDir = 
       let
-        excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") (cfg.preserveConfigPaths.paths or []));
+        #excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") (cfg.preserveConfigPaths.paths or []));
+        cfga = config.home;
       in ''
         # --- Automated cleanup script ---
         # The goal of this script is to delete all content in the ~/.config/ directory,

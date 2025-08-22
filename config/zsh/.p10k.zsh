@@ -73,7 +73,7 @@
 
   # OS identifier color.
   typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=#33c2c4
-  typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=%B$'ε›'
+  typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=%B$'❯›'
 
   # Add an empty line before each prompt except the first. This doesn't emulate the bug
   # in Pure that makes prompt drift down whenever you use the Alt-C binding from fzf or similar.

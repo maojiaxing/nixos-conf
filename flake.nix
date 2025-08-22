@@ -3,6 +3,7 @@
 
   nixConfig = {
     extra-substituters = [
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
       "https://anyrun.cachix.org"
     ];
 
