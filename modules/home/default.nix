@@ -22,7 +22,7 @@ in {
     stateDir   = mkOpt str "/home/${config.user.name}/.local/state";
     fakeDir    = mkOpt str "/home/${config.user.name}/.local/user";
 
-    preserveConfigPaths = mkOpt (attrsOf (listOf str)) {default = ["nixos"];} "Directories to preserve during cleanup, keyed by module name";  
+    config.preserveDirs = mkOpt (attrsOf (listOf str)) "Directories to preserve during cleanup, keyed by module name";  
   };
 
   config = {
@@ -44,6 +44,10 @@ in {
         XDG_FAKE_HOME = cfg.fakeDir;
         XDG_DESKTOP_DIR = cfg.fakeDir;
       };
+    };
+    
+    home.config.preserveDirs = {
+      default = [ "nixos" ];
     };
 
     home.file =
@@ -77,11 +81,10 @@ in {
     system.activationScripts.cleanupConfigDir = 
       let
         # Merge all module configurations into a single list of paths to preserve
-        allPreservedPaths = flatten (attrValues cfg.preserveConfigPaths);
+        allPreservedDirs = flatten (attrValues cfg.config.preserveDirs);
         # Remove duplicates while preserving order
-        uniquePreservedPaths = unique allPreservedPaths;
-        excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") uniquePreservedPaths);
-        cfga = config.home;
+        uniquePreservedDirs = unique allPreservedDirs;
+        excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") uniquePreservedDirs);
       in ''
         # --- Automated cleanup script ---
         # The goal of this script is to delete all content in the ~/.config/ directory,
@@ -91,7 +94,7 @@ in {
 
         if [ -d "$CONFIG_DIR" ]; then
           echo "Cleaning up the $CONFIG_DIR directory..."
-          echo "Preserving directories: ${concatStringsSep ", " uniquePreservedPaths}"
+          echo "Preserving directories: ${concatStringsSep ", " uniquePreservedDirs}"
 
           ${pkgs.findutils}/bin/find "$CONFIG_DIR" -mindepth 1 -maxdepth 1 ${excludeExpr} -exec rm -rf '{}' +
 
