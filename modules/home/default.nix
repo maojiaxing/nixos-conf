@@ -22,7 +22,7 @@ in {
     stateDir   = mkOpt str "/home/${config.user.name}/.local/state";
     fakeDir    = mkOpt str "/home/${config.user.name}/.local/user";
 
-    preserveConfigPaths = mkOpt (listOf str) [ "nixos" ] "Directories to preserve during cleanup";  
+    preserveConfigPaths = mkOpt (attrsOf (listOf str)) {default = ["nixos"];} "Directories to preserve during cleanup, keyed by module name";  
   };
 
   config = {
@@ -76,7 +76,11 @@ in {
 
     system.activationScripts.cleanupConfigDir = 
       let
-        excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") cfg.preserveConfigPaths);
+        # Merge all module configurations into a single list of paths to preserve
+        allPreservedPaths = flatten (attrValues cfg.preserveConfigPaths);
+        # Remove duplicates while preserving order
+        uniquePreservedPaths = unique allPreservedPaths;
+        excludeExpr = concatStringsSep " " (map (name: "! -name '${name}'") uniquePreservedPaths);
         cfga = config.home;
       in ''
         # --- Automated cleanup script ---
@@ -87,7 +91,7 @@ in {
 
         if [ -d "$CONFIG_DIR" ]; then
           echo "Cleaning up the $CONFIG_DIR directory..."
-          echo "Preserving directories: ${concatStringsSep ", " cfg.preserveConfigPaths}"
+          echo "Preserving directories: ${concatStringsSep ", " uniquePreservedPaths}"
 
           ${pkgs.findutils}/bin/find "$CONFIG_DIR" -mindepth 1 -maxdepth 1 ${excludeExpr} -exec rm -rf '{}' +
 
