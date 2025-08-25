@@ -3,8 +3,8 @@ set -eo pipefail
 
 BWRAP_BIN="@bwrap_bin@"
 BASH_BIN="@bash_bin@"
+CLAUDE_BIN="$out/bin/claude"
 NODE_BIN_PATH="@node_bin_path@"
-CLAUDE_BIN="$out/bin/claude-bin"
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -18,15 +18,21 @@ $BASH_BIN -c "mkdir -p \"$CLAUDE_CONFIG_DIR\" \"$CLAUDE_CACHE_DIR\" \"$CLAUDE_DA
 
 for config_file in .claude.json .claude.json.backup; do
   if [ -f "$HOME/$config_file" ]; then
-    echo "Moving old config file $HOME/$config_file to $CLAUDE_CONFIG_DIR/home/"
-    $BASH_BIN -c "mkdir -p \"$CLAUDE_CONFIG_DIR/home\""
-    mv "$HOME/$config_file" "$CLAUDE_CONFIG_DIR/home/"
-  fi
-  if [ ! -f "$CLAUDE_CONFIG_DIR/home/$config_file" ]; then
-    echo '{}' > "$CLAUDE_CONFIG_DIR/home/$config_file"
+    echo "Moving old config file $HOME/$config_file to $CLAUDE_CONFIG_DIR/"
+    mv "$HOME/$config_file" "$CLAUDE_CONFIG_DIR/"
   fi
 done
 
+BWRAP_ENV_ARGS=()
+CLAUDE_SETTINGS_FILE="$CLAUDE_CONFIG_DIR/settings.json"
+if [ -f "$CLAUDE_SETTINGS_FILE" ]; then
+  # 使用 jq 读取 .env 对象中的所有键值对，并为 bwrap 构建 --setenv 参数
+  while IFS= read -r -d '' key && IFS= read -r -d '' value; do
+    if [ -n "$key" ]; then
+      BWRAP_ENV_ARGS+=(--setenv "$key" "$value")
+    fi
+  done < <(jq -j '.env | to_entries[] | .key, "\u0000", .value, "\u0000"' "$CLAUDE_SETTINGS_FILE")
+fi
 
 exec "$BWRAP_BIN" \
   --unshare-all \
@@ -37,18 +43,18 @@ exec "$BWRAP_BIN" \
   --proc /proc \
   --dev-bind /dev/dri /dev/dri \
   \
+  --ro-bind /nix/store /nix/store \
   --ro-bind /etc /etc \
-  --ro-bind /usr/share /usr/share \
   --ro-bind /usr/lib /usr/lib \
-  --ro-bind /usr/lib64 /usr/lib64 \
   --ro-bind /usr/bin /usr/bin \
-  --ro-bind /usr/sbin /usr/sbin \
-  --ro-bind-try /opt /opt \
+  --ro-bind-try /usr/share /usr/share \
+  --ro-bind-try /usr/sbin /usr/sbin \
+  --ro-bind-try /usr/lib64 /usr/lib64 \
   \
   --symlink /usr/lib /lib \
   --symlink /usr/lib /lib64 \
   --symlink /usr/bin /bin \
-  --symlink /usr/bin /sbin \
+  --symlink /usr/bin /sbin  \
   --symlink /run /var/run \
   \
   --tmpfs "$HOME" \
@@ -62,14 +68,16 @@ exec "$BWRAP_BIN" \
   --bind-try "$HOME/.npm" "$HOME/.npm" \
   \
   --dir "$HOME/.claude" \
-  --bind "$CLAUDE_CONFIG_DIR" "$HOME/.claude" \
-  --bind "$CLAUDE_CONFIG_DIR/.claude.json" "$HOME/.claude.json" \
-  --bind "$CLAUDE_CONFIG_DIR/.claude.json.backup" "$HOME/.claude.json.backup" \
+  --bind-try "$CLAUDE_CONFIG_DIR/.claude" "$HOME/.claude" \
+  --bind-try "$CLAUDE_CONFIG_DIR/.claude.json" "$HOME/.claude.json" \
+  --bind-try "$CLAUDE_CONFIG_DIR/.claude.json.backup" "$HOME/.claude.json.backup" \
   \
   --bind "$PWD" "$PWD" \
   --chdir "$PWD" \
   \
   --setenv HOME "$HOME" \
-  --setenv PATH "$HOME/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+  --setenv PATH "$NODE_BIN_PATH:$HOME/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+  \
+  "${BWRAP_ENV_ARGS[@]}" \
   \
   "$CLAUDE_BIN" "$@"
