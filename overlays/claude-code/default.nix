@@ -5,8 +5,7 @@ let
   claudeWrapper = super.stdenv.mkDerivation {
     pname = "claude-wrapper";
     version = originalClaudeCode.version;
-    src = null;  
-  
+
     buildInputs = [
       super.bubblewrap
       super.bash
@@ -14,12 +13,12 @@ let
       originalClaudeCode
     ];
 
+   
     installPhase = ''
       mkdir -p $out/bin
       
       wrapperContent = builtins.replaceVars {
         src = builtins.readFile ./claude-wrapper.sh;
-        
         values = {
           bwrap_bin = "${super.bubblewrap}/bin/bwrap";
           bash_bin = "${super.bash}/bin/bash";
@@ -28,7 +27,7 @@ let
         };
       };
       
-     
+      
       echo -n "$wrapperContent" > $out/bin/claude
       chmod +x $out/bin/claude
     '';
