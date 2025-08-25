@@ -47,7 +47,7 @@ in {
     };
     
     home.config.preserveDirs = {
-      default = [ "nixos" ];
+      nixos = [ "nixos" ];
     };
 
     home.file =

@@ -10,6 +10,10 @@ in {
 
   config = mkIf cfg.enable {
 
+    home.config.preserveDirs = {
+      claude = [ "claude-code" ];
+    };
+
     environment = {
       systemPackages = with unstable-pkgs; [
         claude-code
