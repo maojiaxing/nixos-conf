@@ -1,24 +1,38 @@
-self: supper: 
+self: super: 
+let
+  originalClaudeCode = super.claude-code;
 
-{
-  claude-code = super.claude-code.overrideAttrs (oldAttrs: {
-    nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ 
-      super.bubblerap 
-      super.coreutils 
+  claudeWrapper = super.stdenv.mkDerivation {
+    pname = "claude-wrapper";
+    version = originalClaudeCode.version;
+    src = null;  
+  
+    buildInputs = [
+      super.bubblewrap
       super.bash
       super.nodejs_20
+      originalClaudeCode
     ];
-    
-    postInstall = ''
-      mv $out/bin/claude $out/bin/claude-bin
 
-      ${super.substituteAll}/bin/substituteAll ${./claude-wrapper.sh} $out/bin/claude \
-        --subst-var-by bwrap_bin ${super.bubblewrap}/bin/bwrap \
-        --subst-var-by bash_bin ${super.bash}/bin/bash
-        --subst-var-by node_bin_path ${super.nodejs_20}/bin 
-
+    installPhase = ''
+      mkdir -p $out/bin
+      
+      wrapperContent = builtins.replaceVars {
+        src = builtins.readFile ./claude-wrapper.sh;
+        
+        values = {
+          bwrap_bin = "${super.bubblewrap}/bin/bwrap";
+          bash_bin = "${super.bash}/bin/bash";
+          node_bin_path = "${super.nodejs_20}/bin";
+          claude_bin = "${originalClaudeCode}/bin/claude"; # 指向原始二进制文件
+        };
+      };
+      
+     
+      echo -n "$wrapperContent" > $out/bin/claude
       chmod +x $out/bin/claude
     '';
-  });
-
+  };
+in {
+  claude-code = claudeWrapper; 
 }
