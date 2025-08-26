@@ -48,6 +48,7 @@ exec "$BWRAP_BIN" \
   --ro-bind-try /usr/share /usr/share \
   --ro-bind-try /usr/sbin /usr/sbin \
   --ro-bind-try /usr/lib64 /usr/lib64 \
+  --ro-bind-try /run/current-system/sw/bin /run/current-system/sw/bin \
   \
   --symlink /usr/lib /lib \
   --symlink /usr/lib /lib64 \
@@ -74,6 +75,6 @@ exec "$BWRAP_BIN" \
   --chdir "$PWD" \
   \
   --setenv HOME "$HOME" \
-  --setenv PATH "$NODE_BIN_PATH:$HOME/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+  --setenv PATH "$NODE_BIN_PATH:$HOME/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/run/current-system/sw/bin" \
   \
   "$CLAUDE_BIN" "$@"
