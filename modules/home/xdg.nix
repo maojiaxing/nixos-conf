@@ -8,7 +8,7 @@ in {
 
   options.modules.xdg = {
     enable = mkBoolOpt true;
-    ssh.enable = mkBoolOpt true;
+    ssh.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [

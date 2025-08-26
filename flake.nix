@@ -33,8 +33,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
