@@ -1,4 +1,4 @@
-{ lib, attrs, modules, ... }:
+{ lib, attrs, modules, pkgs, ... }:
 
 with builtins;
 with lib;
@@ -13,6 +13,16 @@ rec {
     inherit program;
     type = "app";
   };
+
+  mkWrapper = package: postBuild:
+    let 
+      name  = if lib.isList package then elemAt package 0 else package;
+      paths = if lib.isList package then package else [ package ];
+    in pkgs.symlinkjoin {
+      inherit paths postBuild;
+      name = "${name}-wrapped";
+      buildInputs = [ pkgs.makeWrapper ];
+    };
 
   # mkPkgs :: system -> nixpkgs -> overlays -> pkgs
   #

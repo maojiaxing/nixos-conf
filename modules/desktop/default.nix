@@ -5,7 +5,7 @@ let
   cfg = config.modules.desktop;
 in {
   options.modules.desktop = {
-    type = mkOpt (types.nullOr str) null;
+    type = mkOpt (types.nullOr types.str) null;
   };
 
   config = mkMerge [
