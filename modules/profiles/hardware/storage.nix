@@ -2,7 +2,6 @@
 
 with lib;
 let 
-
   layout = config.modules.hardware.storage.layout;
 
   findTypes = typeName: layoutNode:
