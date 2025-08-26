@@ -19,6 +19,49 @@ let
       (concatMap collectFilesystems (attrValues layoutNode))
     );
 
+  defaultLayout = diskDevice: {
+    disk.nixos = {
+      device = diskDevice;
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions = {
+          boot = {
+            type = "EF00";
+            size = "512M";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
+          };
+
+          root = {
+            size = "100%";
+            content = {
+              type = "btrfs";
+              subvolumes = {
+                "@root" = {
+                  mountpoint = "/";
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+
+                "@home" = {
+                  mountpoint = "/home";
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+
+                "@nix" = {
+                  mountpoint = "/nix";
+                  mountOptions = [ "compress=zstd" "noatime" "nodatacow" ];
+                };
+              };
+            }
+          };
+        };
+      };
+    };
+  };
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
