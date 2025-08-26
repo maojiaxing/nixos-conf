@@ -22,4 +22,10 @@ let
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
+  options.modules.profile.hardware.storage = {
+    enable = mkEnableOption "declarative disk management with Disko";
+
+    disk = mkOpt types.str "The primary disk device for the default layout.";
+ 
+  };
 }
