@@ -71,8 +71,8 @@ in {
 
   options.modules.profile.hardware.storage = {
     enable = mkEnableOption "declarative disk management with Disko";
-    disk   = mkOpt (types.nullOr types.str) "The primary disk device for the default layout.";
-    layout = mkOpt (types.nullOr types.str) "A complete, custom disko.devices conf. If this is set, the 'disk' option is ignored.";
+    disk   = mkOpt' (types.nullOr types.str) null "The primary disk device for the default layout.";
+    layout = mkOpt' (types.nullOr types.str) null "A complete, custom disko.devices conf. If this is set, the 'disk' option is ignored.";
   };
 
   config = mkIf config.modules.hardware.storage.enable {
