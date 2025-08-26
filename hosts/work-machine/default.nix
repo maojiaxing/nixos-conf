@@ -7,8 +7,8 @@
       platform = "wsl";
       user.name = "maojiaxing";
     };
-
-
+    
+    xdg.ssh.enable = true;
   };
 
   #   hardware = {

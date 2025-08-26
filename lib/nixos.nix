@@ -18,7 +18,7 @@ rec {
     let 
       name  = if lib.isList package then elemAt package 0 else package;
       paths = if lib.isList package then package else [ package ];
-    in pkgs.symlinkjoin {
+    in pkgs.symlinkJoin {
       inherit paths postBuild;
       name = "${name}-wrapped";
       buildInputs = [ pkgs.makeWrapper ];
@@ -146,12 +146,12 @@ rec {
     let
       overlayValues = attrValues (flake.overlays or {});
      
-      tracedOverlays = builtins.trace "Loaded overlays: ${toString (builtins.attrNames flake.overlays)}" overlayValues;
+      #tracedOverlays = builtins.trace "Loaded overlays: ${toString (builtins.attrNames flake.overlays)}" overlayValues;
 
       nixosConfigurations = mapAttrs
         (hostName: hostDef: mkHost {
           inherit hostName hostDef inputs;
-          overlays = tracedOverlays;
+          overlays = overlayValues;
         })
         hosts;
 
@@ -159,7 +159,7 @@ rec {
         inherit systems self lib;
         flake = flake;
         inputs = inputs;
-        overlays = tracedOverlays;
+        overlays = overlayValues;
       };
 
       elems = [ "apps" "bundlers" "checks" "devices" "devShells" "hosts" "modules" "packages" "storage" "systems" ];

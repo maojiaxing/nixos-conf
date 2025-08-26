@@ -101,6 +101,5 @@ in {
           echo "Cleanup completed. All files in $CONFIG_DIR except for specified directories have been deleted."
         fi
       '';
-
   };
 }
