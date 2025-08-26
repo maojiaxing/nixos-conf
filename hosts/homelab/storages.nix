@@ -51,6 +51,28 @@
           };
         };
       };
+
+      zfs_pool = {
+        storage = {
+          type = "zfs_pool";
+          options.ashift = "12";
+          datasets = {
+            data = {
+              type = "zfs_fs";
+              mountpoint = "/storage";
+              options."compression" = "zstd";
+            };
+          };
+        };
+      };
     };
+  };
+
+  networking.hostId = "acc4edf6";
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 20;
+    algorithm = "zstd";
   };
 }
