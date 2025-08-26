@@ -2,7 +2,7 @@
 
 with lib;
 let 
-  layout = config.modules.hardware.storage.layout;
+  cfg = config.modules.profiles.hardware.storage;
 
   findTypes = typeName: layoutNode:
     if ! isAttrs layoutNode then false
@@ -28,11 +28,7 @@ let
           boot = {
             type = "EF00";
             size = "512M";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-            };
+            content = { type = "filesystem"; format = "vfat"; mountpoint = "/boot"; };
           };
 
           root = {
@@ -40,18 +36,9 @@ let
             content = {
               type = "btrfs";
               subvolumes = {
-                "@root" = {
-                  mountpoint = "/";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "@home" = {
-                  mountpoint = "/home";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "@nix" = {
-                  mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" "nodatacow" ];
-                };
+                "@root" = { mountpoint = "/"; mountOptions = [ "compress=zstd" "noatime" ]; };
+                "@home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" "noatime" ]; };
+                "@nix"  = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" "nodatacow" ]; };
               };
             };
           };
@@ -61,32 +48,31 @@ let
   };
 
   finalLayout =
-    if modules.profile.hardware.storage.layout != null
-    then modules.profile.hardware.storage.layout
-    else defaultLayout modules.profile.hardware.storage.disk;
+    if cfg.layout != null
+    then cfg.layout
+    else defaultLayout cfg.disk;
 
   usesLVM = findTypes [ "lvm_pv" "lvm_vg" ] layout;
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
   options.modules.profile.hardware.storage = {
-    enable = mkEnableOption "declarative disk management with Disko";
     disk   = mkOpt' (types.nullOr types.str) null "The primary disk device for the default layout.";
     layout = mkOpt' (types.nullOr types.str) null "A complete, custom disko.devices conf. If this is set, the 'disk' option is ignored.";
   };
 
-  config = mkIf config.modules.hardware.storage.enable {
+  config = mkIf (cfg.disk != null || cfg.layout != null) {
     assertions = [
       {
-        assertion config.module.profile.hardware.storage.disk != null || config.module.profile.hardware.storage.layout != null;
+        assertion = cfg.disk != null || cfg.layout != null;
         message = ''
-          modules.profile.hardware.storage is enabled, but neither 'disk' nor 'layout' is specified.
+          Both 'disk' and 'layout' are not specified in mySystem.storage.
           Please specify 'disk' to use the default layout, or a full 'layout' for a custom setup.
         '';
       }
 
       {
-        assertion !(config.module.profile.hardware.storage.disk != null || config.module.profile.hardware.storage.layout != null);
+        assertion = !(cfg.disk != null || cfg.layout != null);
         message = ''
           Both 'disk' and 'layout' are specified in mySystem.storage.
           Please specify only one: 'disk' for the default layout, or 'layout' for a custom setup.
