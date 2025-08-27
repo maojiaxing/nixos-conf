@@ -52,7 +52,7 @@ let
     then cfg.layout
     else defaultLayout cfg.disk;
 
-  usesLVM = findTypes [ "lvm_pv" "lvm_vg" ] layout;
+  usesLVM = findTypes [ "lvm_pv" "lvm_vg" ] finalLayout;
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
