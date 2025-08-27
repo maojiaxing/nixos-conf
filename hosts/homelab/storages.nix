@@ -41,13 +41,13 @@
             size = "931.5G";
             content = {
               type = "zfs";
-              pool = "storage"; # 对应你的 ZFS pool 标签
+              pool = "storage";
             };
           };
 
           reserved = {
             size = "8M";
-            type = "EF02"; # BIOS boot partition, a safe generic type
+            type = "EF02"; 
           };
         };
       };

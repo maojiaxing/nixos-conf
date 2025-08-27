@@ -12,7 +12,7 @@ in {
     dirs = mkOpt (listOf (either str path)) [ 
       "${configRoot}/config/secrets"
       "/etc/nixos/secrets" 
-    ]
+    ];
   }; 
 
   config = {
