@@ -18,7 +18,8 @@ in {
   config = {
     assertions = [
       {
-        assertion = config.age.secrets = {} || (pathExists hostKey)
+        assertion = config.age.secrets == {} || (pathExists hostKey);
+        message = "Secrets provided, but no host key was found";
       }
     ];
 
