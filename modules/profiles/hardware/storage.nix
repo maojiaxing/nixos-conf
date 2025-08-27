@@ -52,7 +52,7 @@ let
     then cfg.layout
     else defaultLayout cfg.disk;
 
-  usesLVM = findTypes [ "lvm_pv" "lvm_vg" ] finalLayout;
+  # usesLVM = findTypes [ "lvm_pv" "lvm_vg" ] finalLayout;
 
   foundFilesystems = unique (collectFilesystems finalLayout);
 in {
@@ -86,6 +86,6 @@ in {
 
     boot.supportedFilesystems = foundFilesystems;
 
-    boot.initrd.lvm.enable = mkIf usesLVM true;
+    # boot.initrd.lvm.enable = mkIf usesLVM true;
   };
 }
