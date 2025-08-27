@@ -5,12 +5,12 @@ let
   cfg = config.modules.profiles.hardware.storage;
 
   findTypes = typeName: layoutNode:
-    if ! isAttrs layoutNode then false
-    else if elem layoutNode.type typeName then true
+    if !isAttrs layoutNode then false
+    else if (layoutNode ? "type") && (elem layoutNode.type typeName) then true
     else any (findTypes typeName) (attrValues layoutNode);
 
   collectFilesystems = layoutNode:
-    if ! isAttrs layoutNode then [ ]
+    if !isAttrs layoutNode then [ ]
     else (
       (if layoutNode.type == "btrfs" then [ "btrfs" ] else [ ]) ++
       (if elem layoutNode.type [ "zfs" "zfs_fs" ] then [ "zfs" ] else [ ]) ++
