@@ -10,13 +10,14 @@ let
     else any (findTypes typeName) (attrValues layoutNode);
 
   collectFilesystems = layoutNode:
-    if !isAttrs layoutNode then [ ]
-    else (
-      (if layoutNode.type == "btrfs" then [ "btrfs" ] else [ ]) ++
-      (if elem layoutNode.type [ "zfs" "zfs_fs" ] then [ "zfs" ] else [ ]) ++
-      (if layoutNode.type == "filesystem" && layoutNode ? "format" then [ layoutNode.format ] else [ ]) ++
-      (concatMap collectFilesystems (attrValues layoutNode))
-    );
+      if ! lib.isAttrs layoutNode then [ ]
+      else
+        (
+          (if (layoutNode ? "type") && (layoutNode.type == "btrfs") then [ "btrfs" ] else [ ]) ++
+          (if (layoutNode ? "type") && (elem layoutNode.type [ "zfs" "zfs_fs" ]) then [ "zfs" ] else [ ]) ++
+          (if (layoutNode ? "type") && (layoutNode.type == "filesystem") && (layoutNode ? "format") then [ layoutNode.format ] else [ ]) ++
+          (concatMap collectFilesystems (attrValues layoutNode))
+        );
 
   defaultLayout = diskDevice: {
     disk.nixos = {
@@ -53,6 +54,8 @@ let
     else defaultLayout cfg.disk;
 
   usesLVM = findTypes [ "lvm_pv" "lvm_vg" ] finalLayout;
+
+  foundFilesystems = unique (collectFilesystems finalLayout);
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
@@ -82,8 +85,8 @@ in {
 
     disko.devices = finalLayout;
 
-    boot.supportedFilesystems = lib.unique (collectFilesystems finalLayout);
+    boot.supportedFilesystems = foundFilesystems;
 
-    boot.initrd.lvm.enable = lib.mkIf (usesLVM finalLayout) true;
+    boot.initrd.lvm.enable = mkIf (usesLVM finalLayout) true;
   };
 }
