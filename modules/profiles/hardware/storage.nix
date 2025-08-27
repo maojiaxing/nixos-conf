@@ -11,13 +11,12 @@ let
 
   collectFilesystems = layoutNode:
       if ! lib.isAttrs layoutNode then [ ]
-      else
-        (
-          (if (layoutNode ? "type") && (layoutNode.type == "btrfs") then [ "btrfs" ] else [ ]) ++
-          (if (layoutNode ? "type") && (elem layoutNode.type [ "zfs" "zfs_fs" ]) then [ "zfs" ] else [ ]) ++
-          (if (layoutNode ? "type") && (layoutNode.type == "filesystem") && (layoutNode ? "format") then [ layoutNode.format ] else [ ]) ++
-          (concatMap collectFilesystems (attrValues layoutNode))
-        );
+      else  (
+        (if (layoutNode ? "type") && (layoutNode.type == "btrfs") then [ "btrfs" ] else [ ]) ++
+        (if (layoutNode ? "type") && (elem layoutNode.type [ "zfs" "zfs_fs" ]) then [ "zfs" ] else [ ]) ++
+        (if (layoutNode ? "type") && (layoutNode.type == "filesystem") && (layoutNode ? "format") then [ layoutNode.format ] else [ ]) ++
+        (concatMap collectFilesystems (attrValues layoutNode))
+      );
 
   defaultLayout = diskDevice: {
     disk.nixos = {
@@ -87,6 +86,6 @@ in {
 
     boot.supportedFilesystems = foundFilesystems;
 
-    boot.initrd.lvm.enable = mkIf (usesLVM finalLayout) true;
+    boot.initrd.lvm.enable = mkIf usesLVM true;
   };
 }
