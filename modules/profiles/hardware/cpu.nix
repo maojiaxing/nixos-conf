@@ -9,11 +9,11 @@ in {
   };
 
   config = mkMerge [
-    (mkIf cpu == "intel" {
+    (mkIf (cpu == "intel") {
       hardware.cpu.intel.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
     })
 
-    (mkIf cpu == "amd" {
+    (mkIf (cpu == "amd") {
       hardware.cpu.amd.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
       boot.kernelParams = [ "amd_pstate=active" ];
     })
