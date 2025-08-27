@@ -56,7 +56,7 @@ let
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
-  options.modules.profile.hardware.storage = {
+  options.modules.profiles.hardware.storage = {
     disk   = mkOpt' (types.nullOr types.str) null "The primary disk device for the default layout.";
     layout = mkOpt' (types.nullOr types.str) null "A complete, custom disko.devices conf. If this is set, the 'disk' option is ignored.";
   };
