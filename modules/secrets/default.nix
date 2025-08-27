@@ -38,7 +38,7 @@ in {
           })
           (import "${dir}/secrets.nix"))
           (filter (dir: pathExists "${dir}/secrets.nix")
-            config.modules.agenix.dirs));
+            config.modules.secrets.dirs));
     };
 
     environment.systemPackages = with pkgs; [
