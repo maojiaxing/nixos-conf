@@ -2,7 +2,7 @@
 
 with lib;
 let 
-  cfg = config.modules.profiles.hardware.storage;
+  cfg = config.modules.hardware.storage;
 
   findTypes = typeName: layoutNode:
     if !isAttrs layoutNode then false
@@ -58,7 +58,7 @@ let
 in {
   imports = [ inputs.disko.nixosModules.disko ];
 
-  options.modules.profiles.hardware.storage = {
+  options.modules.hardware.storage = {
     disk   = mkOpt' (types.nullOr types.str) null "The primary disk device for the default layout.";
     layout = mkOpt' (types.nullOr types.str) null "A complete, custom disko.devices conf. If this is set, the 'disk' option is ignored.";
   };
@@ -85,7 +85,5 @@ in {
     disko.devices = finalLayout;
 
     boot.supportedFilesystems = foundFilesystems;
-
-    # boot.initrd.lvm.enable = mkIf usesLVM true;
   };
 }

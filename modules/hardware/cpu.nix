@@ -2,9 +2,9 @@
 
 with lib;
 let 
-  cpu = config.modules.profiles.hardware.cpu;
+  cpu = config.modules.hardware.cpu;
 in {
-  options.modules.profiles.hardwrae = {
+  options.modules.hardwrae = {
     cpu = mkOpt' (types.enum [ "intel" "amd" "arm" "none" ]) "none" "The vendor/architecture of the CPU for this host.";
   };
 

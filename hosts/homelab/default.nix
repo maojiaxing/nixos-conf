@@ -6,8 +6,9 @@
   ];
 
   modules = {
+    hardware = { cpu = "intel";}; 
+
     profile = {
-      hardware = { cpu = "intel";}; 
       roles = [ "router" "hypervisor" ];
     };
 

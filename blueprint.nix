@@ -46,7 +46,5 @@ with lib;
       group = "users";
       uid = 1000;
     };
-
-    fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
   };
 }

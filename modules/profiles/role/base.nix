@@ -26,6 +26,8 @@ mkMerge [
 
     hardware.enableRedistributableFirmware = true;
 
+    fileSystems."/".device = mkDefault "/dev/disk/by-label/nixos";
+
     nix = {
       settings = {
         auto-optimise-store = true;
@@ -68,5 +70,4 @@ mkMerge [
       };
     };
   })
-
 ]
