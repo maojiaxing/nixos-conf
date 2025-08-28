@@ -8,25 +8,9 @@ with lib;
     modules = {};
 
     user = {
-      name = mkOption {
-        description = "The name of the primary user.";
-        type = str;
-        default = "maojiaxing";
-        example = "nix-user";
-      };
-
-      packages = mkOption {
-        description = "A list of packages to be installed for the user.";
-        type = listOf package;
-        default = [];
-        example = lib.literalExpression ''
-          with pkgs; [
-            git
-            neovim
-            ripgrep
-          ]
-        '';
-      };
+      name = mkOpt' str "maojiaxing" "The name of the primary user.";
+      programs = mkOpt' attrs {} "A list of programs to be installed for the user.";
+      packages = mkOpt' (listOf package) [] "A list of packages to be installed for the user.";
     };
   };
 

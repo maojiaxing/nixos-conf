@@ -23,5 +23,9 @@ in {
 
         ];
     }
+
+    (mkIf (config.modules.desktop.type != null) {
+      
+    })
   ];
 }

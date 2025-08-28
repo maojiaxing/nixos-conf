@@ -76,6 +76,8 @@ in {
           dataHome   = mkForce cfg.dataDir;
           stateHome  = mkForce cfg.stateDir;
         };
+
+        programs = config.user.programs;
       };
     };
 

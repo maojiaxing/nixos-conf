@@ -3,11 +3,11 @@
 with lib;
 {
   config = mkIf (elem "kitty" config.modules.desktop.apps) {
-    user.packages = with pkgs; [
-      kitty
-    ];
+    # user.packages = with pkgs; [
+    #   kitty
+    # ];
 
-    home-manager.users.${config.user.name}.programs.kitty = {
+    user.programs.kitty = {
       enable = true;
       settings = {
         font_size = 13.0;
