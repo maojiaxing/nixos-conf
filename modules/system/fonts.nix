@@ -2,9 +2,9 @@
 
 {
   fonts.packages = with pkgs; [
-    maple-mono
-    maple-mono.NF
-    maple-mono.CN
+    maple-mono.truetype
+    maple-mono.NF-unhinted
+    maple-mono.NF-CN-unhinted
   ];
 
   fonts.fontDir.enable = true;
