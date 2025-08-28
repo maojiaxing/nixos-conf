@@ -7,6 +7,7 @@
       platform = "wsl";
     };
     
+    desktop.apps = [ "kitty" ];
   };
 
   #   hardware = {

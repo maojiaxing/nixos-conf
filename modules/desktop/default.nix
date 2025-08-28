@@ -6,13 +6,14 @@ let
 in {
   options.modules.desktop = {
     type = mkOpt (types.nullOr types.str) null;
+    apps = mkOpt (types.listOf types.str) [ ];
   };
 
   config = mkMerge [
     {
       assertions = 
-	let 
-	  isEnabled = _: v: v.enable or false;
+        let 
+          isEnabled = _: v: v.enable or false;
           hasEnableOption = cfg: (anyAttrs isEnabled cfg) || !(anyAttrs (_: v: isAttrs v && anyAttrs isEnabled v) cfg);
         in [
           {
