@@ -2,13 +2,9 @@
 
 {
   fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    noto-fonts-color-emoji
-    noto-fonts-emoji
-    lxgw-wenkai
-    maple-mono-variable
+    maple-mono
+    maple-mono.NF
+    maple-mono.CN
   ];
 
   fonts.fontDir.enable = true;
