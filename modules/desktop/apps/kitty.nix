@@ -3,6 +3,10 @@
 with lib;
 {
   config = mkIf (elem "kiity" config.modules.desktop.apps) {
+    user.packages = with pkgs; [
+      kitty
+    ];
+
     programs.kitty = {
       enable = true;
       fontSize = 12.0;
