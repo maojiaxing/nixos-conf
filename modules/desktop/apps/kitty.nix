@@ -10,9 +10,21 @@ with lib;
     user.programs.kitty = {
       enable = true;
       settings = {
+        # windows
+        hide_window_decorations = "titlebar-only";
+        window_padding_width = "10 20 10 20";
+        background_blur = 64;
+        remember_window_size = "yes";
+
+        # font
         font_size = 13.0;
+        font_family= "Maple Mono NF CN ExtraLight";
+        bold_font = "family='Maple Mono' style=ExtraBold variable_name=MapleMono";
+
         scrollback_lines = 10000;
-        background_opacity = 0.9; 
+        
+        cursor_trail = 1;
+        
       };
     };
   };
