@@ -13,6 +13,7 @@ with lib;
         font_size = 13.0;
         scrollback_lines = 10000;
         background_opacity = 0.9; 
+      };
     };
   };
 }
