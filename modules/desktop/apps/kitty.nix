@@ -17,7 +17,7 @@ with lib;
         remember_window_size = "yes";
 
         # font
-        font_size = 13.0;
+        font_size = 18.0;
         font_family= "Maple Mono NF CN ExtraLight";
         bold_font = "family='Maple Mono' style=ExtraBold variable_name=MapleMono";
 
