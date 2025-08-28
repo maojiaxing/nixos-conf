@@ -39,7 +39,7 @@ exec "$BWRAP_BIN" \
   --tmpfs /tmp \
   --dev /dev \
   --proc /proc \
-  --dev-bind /dev/dri /dev/dri \
+  --dev-bind-try /dev/dri /dev/dri \
   \
   --ro-bind /nix/store /nix/store \
   --ro-bind /etc /etc \
