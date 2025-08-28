@@ -9,13 +9,10 @@ with lib;
 
     programs.kitty = {
       enable = true;
-      fontSize = 12.0;
-      font = "Fira Code Retina";
-      window = {
-        opacity = 0.9;
-        padding = 10;
-      };
-      shell = pkgs.zsh;
+      settings = {
+        font_size = 13.0;
+        scrollback_lines = 10000;
+        background_opacity = 0.9; 
     };
   };
 }
