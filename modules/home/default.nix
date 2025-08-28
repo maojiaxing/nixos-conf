@@ -5,7 +5,7 @@ let
   cfg = config.home;
 in {
   imports = [
-    inputs.home-manager.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   options.home = with lib.types; {
@@ -55,6 +55,7 @@ in {
         cfg.fakeFile;
 
      home-manager = {
+      useGlobalPkgs = true;
       useUserPackages = true;
 
       users.${config.user.name} = {
