@@ -11,7 +11,7 @@ with lib;
       enable = true;
       settings = {
         # windows
-        hide_window_decorations = "titlebar-only";
+        hide_window_decorations = "yes";
         window_padding_width = "10 20 10 20";
         background_blur = 64;
         remember_window_size = "yes";
