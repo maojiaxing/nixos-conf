@@ -15,6 +15,7 @@ with lib;
         window_padding_width = "10 20 10 20";
         background_blur = 64;
         remember_window_size = "yes";
+        mouse_map = "super+left press ungrabbed mouse-drag-window";
 
         # font
         font_size = 18.0;
