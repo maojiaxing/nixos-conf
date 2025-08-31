@@ -10,7 +10,9 @@ stdenv.mkDerivation rec{
   };
 
   sourceRoot = ".";
+
   nativeBuildInputs = [ unzip ];
+  
   installPhase = ''
     find . -name '*.ttf'    -exec install -Dt $out/share/fonts/truetype {} \;
     find . -name '*.otf'    -exec install -Dt $out/share/fonts/opentype {} \;
