@@ -27,7 +27,7 @@ rec {
   # mkPkgs :: system -> nixpkgs -> overlays -> pkgs
   #
   # 根据系统、nixpkgs 和 overlays 构建 pkgs。
-  mkPkgs = { system, pkgsPath, overlays ? [], lib }:
+  mkPkgs = { system, pkgsPath, overlays ? [] }:
     import pkgsPath {
       inherit overlays;
       system = system;
@@ -40,7 +40,7 @@ rec {
       config = import path;
     });
 
-  mkHost = { hostName, hostDef, inputs, overlays, lib}:
+  mkHost = { hostName, hostDef, inputs, overlays }:
     let
       path = hostDef.path;
 
