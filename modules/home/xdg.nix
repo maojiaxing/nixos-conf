@@ -59,6 +59,7 @@ in {
         mkdir -p "$fakehome" -m 755
         [ -e "$fakehome/.local" ]  || ln -sf ~/.local  "$fakehome/.local"
         [ -e "$fakehome/.config" ] || ln -sf ~/.config "$fakehome/.config"
+        [ -e "$fakehome/.ssh" ]    || ln -sf ~/.config "$fakehome/.ssh"
 
         # Avoid the creation of ~/.pki (typically by Firefox), by ensuring NSS
         # finds this directory.
