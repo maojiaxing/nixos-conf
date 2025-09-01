@@ -27,7 +27,7 @@ rec {
   # mkPkgs :: system -> nixpkgs -> overlays -> pkgs
   #
   # 根据系统、nixpkgs 和 overlays 构建 pkgs。
-  mkPkgs = { system, pkgsPath, overlays ? [] }:
+  mkPkgs = { system, pkgsPath, overlays ? [], lib }:
     import pkgsPath {
       inherit overlays;
       system = system;
