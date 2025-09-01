@@ -70,7 +70,7 @@
         modules.default = import ./blueprint.nix;
         # devShells.default = import ./shell.nix;
 
-        overlays = mapModules ./overlays import;
+        # overlays = mapModules ./overlays import;
         packages = mapModules ./packages import;
       };
 }

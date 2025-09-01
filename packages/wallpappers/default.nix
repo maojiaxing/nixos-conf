@@ -16,7 +16,7 @@ let
 in stdenvNoCC.mkDerivation {
   name = "wallpapers";
 
-  srcs = map fetchurl wallpapers { paht = ./.};
+  srcs = map fetchurl wallpapers { paht = ./.; };
 
   installPhase = ''
     install -d $out
