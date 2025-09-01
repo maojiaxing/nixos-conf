@@ -8,6 +8,6 @@ with lib;
 
   config = mkIf config.modules.shell.direnv.enable {
     programs.direnv.enable = true;
-    nix-direnv.enable = true;
+    #nix-direnv.enable = true;
   };
 }
