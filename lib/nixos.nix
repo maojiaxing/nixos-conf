@@ -40,7 +40,7 @@ rec {
       config = import path;
     });
 
-  mkHost = { hostName, hostDef, inputs, overlays }:
+  mkHost = { hostName, hostDef, inputs, overlays, lib}:
     let
       path = hostDef.path;
 
@@ -150,7 +150,7 @@ rec {
 
       nixosConfigurations = mapAttrs
         (hostName: hostDef: mkHost {
-          inherit hostName hostDef inputs;
+          inherit hostName hostDef inputs lib;
           overlays = overlayValues;
         })
         hosts;
