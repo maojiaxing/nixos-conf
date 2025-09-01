@@ -150,7 +150,7 @@ rec {
 
       nixosConfigurations = mapAttrs
         (hostName: hostDef: mkHost {
-          inherit hostName hostDef inputs lib;
+          inherit hostName hostDef inputs;
           overlays = overlayValues;
         })
         hosts;
