@@ -9,12 +9,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = cfg.acceptServerLicenseTerms;
-        message = "You must accept the VSCode Server license terms by setting acceptServerLicenseTerms = true";
-      }
-    ];
+    # assertions = [
+    #   {
+    #     assertion = cfg.acceptServerLicenseTerms;
+    #     message = "You must accept the VSCode Server license terms by setting acceptServerLicenseTerms = true";
+    #   }
+    # ];
  
     user.packages = with unstable-pkgs;[
       vscode-fhs
