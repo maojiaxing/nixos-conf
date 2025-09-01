@@ -1,5 +1,6 @@
 { lib, stdenvNoCC, fetchurl, ...}: 
 
+with builtins;
 let 
   wallpappers = { path, exclude ? [ "default.nix" ] }:
     let
