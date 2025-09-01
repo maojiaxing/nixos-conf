@@ -1,16 +1,11 @@
-{ lib, config, options, pkgs, ...}:
+{ lib, config, options, unstable-pkgs, ...}:
 
 with lib;
 let
   cfg = config.modules.services.vscode-server;
 in {
   options.modules.services.vscode-server = {
-    enable = mkBoolOpt false;
-    port = mkOpt types.int 3000;
-    auth = mkOpt types.str "password";
-    withoutConnectionToken = mkBoolOpt false;
-    acceptServerLicenseTerms = mkBoolOpt false;
-    extraSettings = mkOpt types.attrs {};
+    enable = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable {
@@ -21,5 +16,9 @@ in {
       }
     ];
  
+    user.packages = with unstable-pkgs;[
+      vscode-fhs
+    ];
+
   };
 }
