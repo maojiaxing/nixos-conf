@@ -10,7 +10,7 @@ let
     else any (findTypes typeName) (attrValues layoutNode);
 
   collectFilesystems = layoutNode:
-      if ! lib.isAttrs layoutNode then [ ]
+      if !lib.isAttrs layoutNode then [ ]
       else  (
         (if (layoutNode ? "type") && (layoutNode.type == "btrfs") then [ "btrfs" ] else [ ]) ++
         (if (layoutNode ? "type") && (elem layoutNode.type [ "zfs" "zfs_fs" ]) then [ "zfs" ] else [ ]) ++
