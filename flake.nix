@@ -13,11 +13,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
-
-    nixpkgs-unstable = {
-      url = "nixpkgs/nixos-unstable";
-    };
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     nixos-hardware = {
       url = "github:nixos/nixos-hardware";
@@ -71,6 +67,8 @@
         # devShells.default = import ./shell.nix;
 
         overlays = mapModules ./overlays import;
-        packages = mapModules ./packages import;
+        packages =
+          (builtins.removeAttrs (mapModules ./packages import) [ "fonts" ])
+          // (import ./packages/fonts);
       };
 }
