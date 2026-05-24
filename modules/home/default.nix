@@ -58,6 +58,10 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
 
+      sharedModules = [
+        inputs.stylix.homeManagerModules.stylix
+      ];
+
       users.${config.user.name} = {
         home = {
           file = mkAliasDefinitions options.home.file;

@@ -1,8 +1,10 @@
-{ self, lib, config, options, pkgs, ...}:
+{ self, lib, config, options, pkgs, inputs, ...}:
 
 with lib;
 {
-  imports = mapModulesRec' ./modules import;
+  imports = mapModulesRec' ./modules import ++ [
+    inputs.stylix.nixosModules.stylix
+  ];
 
   options = with types; {
     modules = {};
@@ -29,6 +31,11 @@ with lib;
       home = "/home/${config.user.name}";
       group = "users";
       uid = 1000;
+    };
+
+    modules.themes = {
+      enable = mkDefault true;
+      active = mkDefault "everforest";
     };
   };
 }
