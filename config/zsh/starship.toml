@@ -1,0 +1,53 @@
+format = "$character$directory$git_branch${custom.git_clean}${custom.git_conflicted}${custom.git_unstaged}${custom.git_staged}${custom.git_remote_stash}"
+add_newline = false
+
+[line_break]
+disabled = true
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+
+[directory]
+style = "white"
+format = "[$path]($style) "
+truncation_length = 0  
+
+[git_branch]
+symbol = ""
+style = "bold cyan"
+format = "[$branch]($style)"
+
+[custom.git_clean]
+command = "echo ' ✓'"
+when = "git status 2>/dev/null | grep -q 'working tree clean'"
+style = "bold green"
+format = " [$output]($style) "
+
+[custom.git_conflicted]
+command = "echo '✗'"
+when = 'git rev-parse --is-inside-work-tree 2>/dev/null && git status --porcelain 2>/dev/null | grep -q -E "^(UU|AA|DD|AU|UA|UD|DU)"'
+style = "bold red"
+format = " [$output]($style) "
+
+[custom.git_unstaged]
+command = "echo '✗'"
+when = 'git rev-parse --is-inside-work-tree 2>/dev/null && ! git status --porcelain 2>/dev/null | grep -q -E "^(UU|AA|DD|AU|UA|UD|DU)" && git status --porcelain 2>/dev/null | grep -E -q "^.[MD]|^\?\?"'
+style = "bold red"
+format = " [$output]($style) "
+
+[custom.git_staged]
+command = "echo '✗'"
+when = 'git rev-parse --is-inside-work-tree 2>/dev/null && ! git status --porcelain 2>/dev/null | grep -q -E "^(UU|AA|DD|AU|UA|UD|DU)" && ! git status --porcelain 2>/dev/null | grep -E -q "^.[MD]|^\?\?" && git status --porcelain 2>/dev/null | grep -E -q "^[MADRC]"'
+style = "bold green"
+format = " [$output]($style) "
+
+[custom.git_remote_stash]
+command = "echo '✗'"
+when = '''
+git rev-parse --is-inside-work-tree 2>/dev/null && \
+! git status --porcelain 2>/dev/null | grep -q '.' && \
+{ git status 2>/dev/null | grep -E -q 'ahead|behind' || git reflog exists refs/stash 2>/dev/null; }
+'''
+style = "bold cyan"
+format = " [$output]($style) "

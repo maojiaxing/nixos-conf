@@ -1,16 +1,18 @@
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias -- -='cd -'
+# Aliases
+alias ls='eza'
+alias ll='eza -lh'
+alias la='eza -lah'
+alias tree='eza --icons'
+alias cat='bat'
+compdef eza=ls
 
-alias clr=clear
-alias sudo='sudo '
-alias rm='rm -i'
-alias mkdir='mkdir -pv'
-alias wget='wget -c'
-alias path='echo -e ${PATH//:/\\n}'
-alias ports='netstat -tulanp'
+# Utilities
+alias grep='rg --color=auto'
+alias diff='diff --color=auto'
+alias df='df -h'
+#alias vim='nvim'
 
-alias reload='source /run/current-system/etc/set-environment'
-alias mk=make
-alias gurl='curl --compressed'
+# Navigation
+alias -- -='cd -' 
+
+alias glog='PAGER="less -F -X" git log'
