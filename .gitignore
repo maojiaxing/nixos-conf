@@ -9,3 +9,4 @@ result*
 .idea/
 .DS_Store
 *.code-workspace
+config/tmux/plugins
